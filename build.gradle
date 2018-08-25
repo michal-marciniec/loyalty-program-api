@@ -27,15 +27,11 @@ repositories {
     maven { url "https://repo.spring.io/milestone" }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.3.1'
-}
-
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-web')
-    compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4'
+    compile('javax.xml.bind:jaxb-api:2.2.4')
     runtime('com.h2database:h2')
     runtime('mysql:mysql-connector-java')
     runtime('org.postgresql:postgresql')
