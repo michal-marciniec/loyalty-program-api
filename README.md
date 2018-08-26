@@ -22,7 +22,7 @@ The application uses gradle as a build tool. To build and run go to project dire
 ./gradlew build -x test
 ./gradlew bootRun
 ```
-It can be then accessed at localhost:8999
+It can be then accessed at localhost:8999. Api specification is available at `http:localhost:8999/swagger-ui.html`
 
 ### Running the tests
 
