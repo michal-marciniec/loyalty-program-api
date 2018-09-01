@@ -2,6 +2,7 @@ package pl.michalmarciniec.loyalty.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,7 @@ public class Member {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")
-    private List<Bonus> bonuses;
+    private List<Bonus> bonuses = new ArrayList<>();
 
     public Bonus receiveBonus(Long giverId, int points) {
         Bonus bonus = new Bonus();

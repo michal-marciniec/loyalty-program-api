@@ -5,6 +5,15 @@ public class BonusDto {
     private Long receiverId;
     private int points;
 
+    public BonusDto() {
+    }
+
+    public BonusDto(Long giverId, Long receiverId, int points) {
+        this.giverId = giverId;
+        this.receiverId = receiverId;
+        this.points = points;
+    }
+
     public Long getGiverId() {
         return giverId;
     }
