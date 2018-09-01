@@ -1,4 +1,4 @@
-package pl.michalmarciniec.loyalty.db;
+package pl.michalmarciniec.loyalty.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,19 +8,14 @@ import java.time.LocalDateTime;
 public class Bonus {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "points", nullable = false)
     private int points;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
-
-    @ManyToOne
-    @JoinColumn(name = "giver_id")
-    private Member giver;
+    @Column(name = "giver_id")
+    private Long giverId;
 
     @Column(name = "given_at", nullable = false)
     private LocalDateTime givenAt;
@@ -41,20 +36,12 @@ public class Bonus {
         this.points = points;
     }
 
-    public Member getMember() {
-        return member;
+    public Long getGiverId() {
+        return giverId;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
-    public Member getGiver() {
-        return giver;
-    }
-
-    public void setGiver(Member giver) {
-        this.giver = giver;
+    public void setGiverId(Long giverId) {
+        this.giverId = giverId;
     }
 
     public LocalDateTime getGivenAt() {

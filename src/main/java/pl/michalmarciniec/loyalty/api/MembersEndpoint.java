@@ -1,7 +1,7 @@
 package pl.michalmarciniec.loyalty.api;
 
-import pl.michalmarciniec.loyalty.db.Member;
-import pl.michalmarciniec.loyalty.db.MembersRepository;
+import pl.michalmarciniec.loyalty.domain.Member;
+import pl.michalmarciniec.loyalty.service.db.MembersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,11 +14,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class MembersEndpoint {
 
     @Autowired
-    private MembersRepository repo;
+    private MembersRepository membersRepository;
 
     @RequestMapping(method = GET)
     public List<Member> getAllMembers() {
-        return repo.findAll();
+        return membersRepository.findAll();
     }
 
 }

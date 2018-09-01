@@ -1,0 +1,8 @@
+spring:
+  datasource:
+      url: jdbc:mysql://localhost:3306/loyalty_program
+      username: be
+      password: loyal
+  jpa:
+    hibernate:
+      ddl-auto: create
