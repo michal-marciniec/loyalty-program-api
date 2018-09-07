@@ -1,10 +1,12 @@
 package pl.michalmarciniec.loyalty.api;
 
-import pl.michalmarciniec.loyalty.api.dto.BonusDto;
-import pl.michalmarciniec.loyalty.domain.Bonus;
-import pl.michalmarciniec.loyalty.service.BonusesService;
+import pl.michalmarciniec.loyalty.domain.BonusDto;
+import pl.michalmarciniec.loyalty.domain.GiveBonusService;
+import pl.michalmarciniec.loyalty.domain.command.CommandValidationException;
+import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,13 +18,19 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class BonusesEndpoint {
 
     @Autowired
-    private BonusesService bonusesService;
+    private GiveBonusService giveBonusService;
 
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Bonus> createBonus(@RequestBody BonusDto bonusDto) {
-        return bonusesService.giveBonus(bonusDto)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<BonusDto> createBonus(@RequestBody GiveBonusCommand giveBonusCommand) {
+        BonusDto commandResult = giveBonusService.giveBonus(giveBonusCommand);
+        return ResponseEntity.ok(commandResult);
     }
+
+    @ExceptionHandler(CommandValidationException.class)
+    public ResponseEntity<ErrorDto> commandNotValid(CommandValidationException ex) {
+        ErrorDto errorInfo = new ErrorDto(ex.getFailReasons(), "Command validation error");
+        return ResponseEntity.badRequest().body(errorInfo);
+    }
+
 
 }

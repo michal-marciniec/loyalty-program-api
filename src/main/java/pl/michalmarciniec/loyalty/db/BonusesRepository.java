@@ -1,4 +1,4 @@
-package pl.michalmarciniec.loyalty.service.db;
+package pl.michalmarciniec.loyalty.db;
 
 import pl.michalmarciniec.loyalty.domain.Bonus;
 import org.springframework.data.jpa.repository.JpaRepository;

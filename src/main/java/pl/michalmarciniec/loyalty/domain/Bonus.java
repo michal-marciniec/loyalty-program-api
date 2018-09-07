@@ -1,54 +1,40 @@
 package pl.michalmarciniec.loyalty.domain;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "bonuses")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Bonus {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "points", nullable = false)
-    private int points;
-
-    @Column(name = "giver_id")
-    private Long giverId;
-
-    @Column(name = "given_at", nullable = false)
-    private LocalDateTime givenAt;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
+    @Builder
+    private Bonus(int points, Long receiverId, Long giverId) {
         this.points = points;
-    }
-
-    public Long getGiverId() {
-        return giverId;
-    }
-
-    public void setGiverId(Long giverId) {
+        this.receiverId = receiverId;
         this.giverId = giverId;
     }
 
-    public LocalDateTime getGivenAt() {
-        return givenAt;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
 
-    public void setGivenAt(LocalDateTime givenAt) {
-        this.givenAt = givenAt;
-    }
+    @Column(name = "points", nullable = false)
+    int points;
+
+    @Column(name = "giver_id", nullable = false)
+    Long giverId;
+
+    @Column(name = "receiver_id", nullable = false)
+    Long receiverId;
+
+    @CreationTimestamp
+    @Column(name = "given_at", nullable = false)
+    LocalDateTime givenAt;
+
 }

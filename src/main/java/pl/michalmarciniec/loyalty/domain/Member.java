@@ -1,66 +1,30 @@
 package pl.michalmarciniec.loyalty.domain;
 
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
+import static lombok.AccessLevel.PRIVATE;
 
 @Entity
 @Table(name = "members")
+@NoArgsConstructor(access = PRIVATE)
 public class Member {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Column(name = "avatar_path", nullable = false)
-    private String avatarPath;
-
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "member_id")
-    private List<Bonus> bonuses = new ArrayList<>();
-
-    public Bonus receiveBonus(Long giverId, int points) {
-        Bonus bonus = new Bonus();
-        bonus.setPoints(points);
-        bonus.setGivenAt(LocalDateTime.now());
-        bonus.setGiverId(giverId);
-        bonuses.add(bonus);
-        return bonus;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    @Builder
+    private Member(String name, String avatarPath) {
         this.name = name;
-    }
-
-    public String getAvatarPath() {
-        return avatarPath;
-    }
-
-    public void setAvatarPath(String avatarPath) {
         this.avatarPath = avatarPath;
     }
 
-    public List<Bonus> getBonuses() {
-        return bonuses;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
 
-    public void setBonuses(List<Bonus> bonuses) {
-        this.bonuses = bonuses;
-    }
+    @Column(name = "name", nullable = false)
+    String name;
+
+    @Column(name = "avatar_path", nullable = false)
+    String avatarPath;
 }
