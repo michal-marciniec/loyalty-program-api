@@ -1,7 +1,7 @@
 package pl.michalmarciniec.loyalty.db;
 
 import pl.michalmarciniec.loyalty.domain.Member;
-import pl.michalmarciniec.loyalty.domain.RankItemDto;
+import pl.michalmarciniec.loyalty.domain.RankingItemDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,10 +11,18 @@ import java.util.List;
 
 public interface MembersRepository extends JpaRepository<Member, Long> {
 
-    @Query(value = "SELECT new pl.michalmarciniec.loyalty.domain.RankItemDto(p, SUM(a.points))" +
+    @Query(value = "SELECT new pl.michalmarciniec.loyalty.domain.RankingItemDto(p, SUM(a.points))" +
             " FROM Member p LEFT JOIN Bonus a ON p.id = a.receiverId " +
-            " WHERE a.givenAt BETWEEN :startDate AND :endDate" +
+            " AND a.givenAt BETWEEN :startDate AND :endDate" +
             " GROUP BY p.id ORDER BY SUM(a.points) DESC")
-    List<RankItemDto> getRank(@Param("startDate") LocalDateTime startDate,
-                              @Param("endDate") LocalDateTime endDate);
+    List<RankingItemDto> getRankings(@Param("startDate") LocalDateTime startDate,
+                                     @Param("endDate") LocalDateTime endDate);
+
+    @Query(value = "SELECT new pl.michalmarciniec.loyalty.domain.RankingItemDto(p, SUM(a.points))" +
+            " FROM Member p LEFT JOIN Bonus a ON p.id = a.receiverId " +
+            " WHERE p.id = :memberId AND a.givenAt BETWEEN :startDate AND :endDate" +
+            " GROUP BY p.id")
+    RankingItemDto getMemberRanking(@Param("memberId") Long memberId,
+                                    @Param("startDate") LocalDateTime startDate,
+                                    @Param("endDate") LocalDateTime endDate);
 }

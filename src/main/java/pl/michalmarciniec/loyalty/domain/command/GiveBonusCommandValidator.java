@@ -21,7 +21,7 @@ public class GiveBonusCommandValidator extends CommandValidator {
         Map<Boolean, String> validations = new HashMap<>();
         validations.put(!giver.isPresent(), "Giver of the bonus must exist");
         validations.put(!receiver.isPresent(), "Receiver of the bonus must exist");
-        validations.put(!giveBonusCommand.getGiverId().equals(giveBonusCommand.getReceiverId()), "Cannot give bonus to oneself");
+        validations.put(giveBonusCommand.getGiverId().equals(giveBonusCommand.getReceiverId()), "Cannot give bonus to oneself");
         validations.put(giveBonusCommand.getPoints() <= 0, "Points amount should be a positive number");
         validate(validations);
     }
