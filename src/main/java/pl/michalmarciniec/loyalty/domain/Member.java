@@ -2,6 +2,7 @@ package pl.michalmarciniec.loyalty.domain;
 
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -10,6 +11,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Entity
 @Table(name = "members")
 @NoArgsConstructor(access = PRIVATE)
+@ToString
 public class Member {
 
     @Builder

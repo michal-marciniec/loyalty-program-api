@@ -2,7 +2,7 @@ package pl.michalmarciniec.loyalty.domain.command;
 
 import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.domain.Member;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -10,10 +10,10 @@ import java.util.Map;
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class GiveBonusCommandValidator extends CommandValidator {
 
-    @Autowired
-    private MembersRepository membersRepository;
+    private final MembersRepository membersRepository;
 
     public void validate(GiveBonusCommand giveBonusCommand) {
         Optional<Member> giver = membersRepository.findById(giveBonusCommand.getGiverId());

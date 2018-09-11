@@ -3,19 +3,18 @@ package pl.michalmarciniec.loyalty.domain;
 import pl.michalmarciniec.loyalty.db.BonusesRepository;
 import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommand;
 import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommandValidator;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class GiveBonusService {
 
-    @Autowired
-    private GiveBonusCommandValidator commandValidator;
-    @Autowired
-    private BonusesRepository bonusesRepository;
+    private final GiveBonusCommandValidator commandValidator;
+    private final BonusesRepository bonusesRepository;
 
     @Transactional
     public BonusDto giveBonus(GiveBonusCommand giveBonusCommand) {

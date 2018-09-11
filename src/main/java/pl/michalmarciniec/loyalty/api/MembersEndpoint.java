@@ -2,7 +2,7 @@ package pl.michalmarciniec.loyalty.api;
 
 import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.domain.MemberDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,10 +14,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @LoyaltyProgramApi
 @RequestMapping("/members")
+@RequiredArgsConstructor
 public class MembersEndpoint {
 
-    @Autowired
-    private MembersRepository membersRepository;
+    private final MembersRepository membersRepository;
 
     @RequestMapping(method = GET, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<MemberDto>> getAllMembers() {

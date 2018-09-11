@@ -4,7 +4,7 @@ import pl.michalmarciniec.loyalty.domain.BonusDto;
 import pl.michalmarciniec.loyalty.domain.GiveBonusService;
 import pl.michalmarciniec.loyalty.domain.command.CommandValidationException;
 import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommand;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,10 +15,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @LoyaltyProgramApi
 @RequestMapping(path = "/bonuses")
+@RequiredArgsConstructor
 public class BonusesEndpoint {
 
-    @Autowired
-    private GiveBonusService giveBonusService;
+    private final GiveBonusService giveBonusService;
 
     @RequestMapping(method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<BonusDto> createBonus(@RequestBody GiveBonusCommand giveBonusCommand) {
