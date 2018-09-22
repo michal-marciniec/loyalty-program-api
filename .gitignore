@@ -27,3 +27,5 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+classes

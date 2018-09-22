@@ -1,7 +1,7 @@
 package pl.michalmarciniec.loyalty.db;
 
+import pl.michalmarciniec.loyalty.db.type.JpaRepositoryWithOptionals;
 import pl.michalmarciniec.loyalty.domain.Bonus;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BonusesRepository extends JpaRepository<Bonus, Long> {
+public interface BonusesRepository extends JpaRepositoryWithOptionals<Bonus, Long> {
 }

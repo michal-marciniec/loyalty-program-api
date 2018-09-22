@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = "2.0.0.M7"
+        springBootVersion = "1.5.9.RELEASE"
         kotlinVersion = "1.2.10"
         javaVersion = "1.8"
     }
@@ -56,6 +56,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile('org.springframework.security.oauth:spring-security-oauth2:2.2.1.RELEASE')
+    compile('org.hibernate:hibernate-core:5.2.12.Final')
+    compile('org.hibernate:hibernate-entitymanager:5.2.12.Final')
     compile("javax.xml.bind:jaxb-api:2.2.4")
     compile("io.springfox:springfox-swagger2:2.7.0")
     compile("io.springfox:springfox-swagger-ui:2.7.0")

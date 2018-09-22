@@ -1,15 +1,16 @@
 package pl.michalmarciniec.loyalty.db;
 
+import pl.michalmarciniec.loyalty.db.type.JpaRepositoryWithOptionals;
 import pl.michalmarciniec.loyalty.domain.Member;
-import pl.michalmarciniec.loyalty.domain.RankingItemDto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import pl.michalmarciniec.loyalty.domain.RankingItemDto;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface MembersRepository extends JpaRepository<Member, Long> {
+public interface MembersRepository extends JpaRepositoryWithOptionals<Member, Long> {
 
     @Query(value = "SELECT new pl.michalmarciniec.loyalty.domain.RankingItemDto(p, SUM(a.points))" +
             " FROM Member p LEFT JOIN Bonus a ON p.id = a.receiverId " +
@@ -25,4 +26,5 @@ public interface MembersRepository extends JpaRepository<Member, Long> {
     RankingItemDto getMemberRanking(@Param("memberId") Long memberId,
                                     @Param("startDate") LocalDateTime startDate,
                                     @Param("endDate") LocalDateTime endDate);
+
 }

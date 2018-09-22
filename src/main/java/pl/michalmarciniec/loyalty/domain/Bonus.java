@@ -35,8 +35,8 @@ public class Bonus {
     @Column(name = "receiver_id", nullable = false)
     Long receiverId;
 
-    @CreationTimestamp
     @Column(name = "given_at", nullable = false)
+    @CreationTimestamp
     LocalDateTime givenAt;
 
 }
