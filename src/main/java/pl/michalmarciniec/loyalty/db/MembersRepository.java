@@ -9,8 +9,11 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface MembersRepository extends JpaRepositoryWithOptionals<Member, Long> {
+
+    Optional<Member> findOneByEmail(String email);
 
     @Query(value = "SELECT new pl.michalmarciniec.loyalty.domain.RankingItemDto(p, SUM(a.points))" +
             " FROM Member p LEFT JOIN Bonus a ON p.id = a.receiverId " +
