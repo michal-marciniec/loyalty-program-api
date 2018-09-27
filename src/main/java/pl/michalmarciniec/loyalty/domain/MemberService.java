@@ -1,9 +1,9 @@
 package pl.michalmarciniec.loyalty.domain;
 
-import pl.michalmarciniec.loyalty.db.MembersRepository;
-import pl.michalmarciniec.loyalty.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.michalmarciniec.loyalty.db.MembersRepository;
+import pl.michalmarciniec.loyalty.security.AuthenticationService;
 
 import java.util.List;
 import java.util.Optional;

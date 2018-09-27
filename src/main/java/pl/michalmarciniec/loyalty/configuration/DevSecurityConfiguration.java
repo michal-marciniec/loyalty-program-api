@@ -3,11 +3,10 @@ package pl.michalmarciniec.loyalty.configuration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Profile("dev")
 @Configuration
-public class DevSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class DevSecurityConfiguration extends SecurityConfiguration {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {

@@ -1,8 +1,11 @@
 package pl.michalmarciniec.loyalty.domain;
 
+import com.google.common.base.Preconditions;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -13,10 +16,11 @@ import static lombok.AccessLevel.PRIVATE;
 public class Member {
 
     @Builder
-    private Member(String email, String name, String avatarPath) {
+    private Member(String email, String name, String avatarPath, Set<Role> roles) {
         this.name = name;
         this.avatarPath = avatarPath;
         this.email = email;
+        this.roles = roles;
     }
 
     @Id
@@ -32,7 +36,22 @@ public class Member {
     @Getter
     String avatarPath;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "members_roles",
+            joinColumns = @JoinColumn(name = "member_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
+    @Getter
+    Set<Role> roles = new HashSet<>();
+
     @Column(name = "email", nullable = false)
     @Getter
     String email;
+
+    public void addRole(Role role) {
+        Preconditions.checkNotNull(role);
+        roles.add(role);
+    }
+
 }

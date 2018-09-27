@@ -1,4 +1,4 @@
-package pl.michalmarciniec.loyalty.db.type;
+package pl.michalmarciniec.loyalty.db;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;

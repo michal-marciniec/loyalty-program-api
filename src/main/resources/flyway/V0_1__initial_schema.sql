@@ -2,6 +2,7 @@ CREATE TABLE members (
   id          BIGINT AUTO_INCREMENT,
   name        VARCHAR(100) NOT NULL,
   avatar_path VARCHAR(100) NOT NULL,
+  email       VARCHAR(100) NOT NULL UNIQUE,
 
   PRIMARY KEY (id)
 );
@@ -17,3 +18,21 @@ CREATE TABLE bonuses (
   FOREIGN KEY (giver_id) REFERENCES members (id),
   FOREIGN KEY (receiver_id) REFERENCES members (id)
 );
+
+CREATE TABLE roles (
+  id   BIGINT AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL UNIQUE,
+
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE members_roles (
+  member_id BIGINT NOT NULL,
+  role_id   BIGINT NOT NULL,
+
+  FOREIGN KEY (member_id) REFERENCES members (id),
+  FOREIGN KEY (role_id) REFERENCES roles (id)
+);
+
+INSERT INTO roles (id, name) VALUES (1, 'ROLE_MEMBER');
+

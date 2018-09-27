@@ -1,6 +1,5 @@
 package pl.michalmarciniec.loyalty.db;
 
-import pl.michalmarciniec.loyalty.db.type.JpaRepositoryWithOptionals;
 import pl.michalmarciniec.loyalty.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import pl.michalmarciniec.loyalty.domain.RankingItemDto;

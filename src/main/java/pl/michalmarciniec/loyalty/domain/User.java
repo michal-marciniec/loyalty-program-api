@@ -3,6 +3,8 @@ package pl.michalmarciniec.loyalty.domain;
 import lombok.Builder;
 import lombok.Value;
 
+import java.util.Set;
+
 @Builder
 @Value
 public class User {
@@ -10,4 +12,5 @@ public class User {
     String name;
     String avatarPath;
     String email;
+    Set<String> roles;
 }
