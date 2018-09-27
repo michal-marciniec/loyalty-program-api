@@ -4,9 +4,6 @@ spring:
     username: sa
     password:
     platform: h2
-  jpa:
-    hibernate:
-      ddl-auto: create
   h2:
     console:
       enabled: true

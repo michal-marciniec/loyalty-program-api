@@ -1,9 +1,15 @@
 spring:
   profiles:
     active: "dev"
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
 
 server:
   port: 8999
+  
+flyway:
+  locations: classpath:flyway
 
 ---
 

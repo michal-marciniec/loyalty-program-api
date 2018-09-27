@@ -66,6 +66,8 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}")
     compile("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
     compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+    compile("org.flywaydb:flyway-core:5.0.2")
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.0")
     runtime("com.h2database:h2")
     runtime("mysql:mysql-connector-java")
     runtime("org.postgresql:postgresql")
