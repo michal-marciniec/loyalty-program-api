@@ -1,5 +1,6 @@
 package pl.michalmarciniec.loyalty.security;
 
+import pl.michalmarciniec.loyalty.api.validation.CommandValidationException;
 import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.db.RolesRepository;
 import pl.michalmarciniec.loyalty.domain.Member;
@@ -29,12 +30,9 @@ public class RoleManager {
     @Transactional
     @PreAuthorize("@roleManager.currentUserHasRole(T(pl.michalmarciniec.loyalty.security.Roles).ADMIN)")
     public void giveRole(GiveRoleCommand giveRoleCommand) {
-        Role role = rolesRepository.findByName(giveRoleCommand.getRoleName()).orElse(null);
-        Member member = membersRepository.findById(giveRoleCommand.getMemberId()).orElse(null);
-
-        if (role != null && member != null) {
-            member.addRole(role);
-        }
+        Role role = rolesRepository.findByName(giveRoleCommand.getRoleName()).orElseThrow(CommandValidationException::new);
+        Member member = membersRepository.findById(giveRoleCommand.getMemberId()).orElseThrow(CommandValidationException::new);
+        member.addRole(role);
     }
 
 }
