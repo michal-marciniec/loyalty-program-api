@@ -16,10 +16,11 @@ import java.time.LocalDateTime;
 public class Bonus {
 
     @Builder
-    private Bonus(int points, Long receiverId, Long giverId) {
+    private Bonus(Long points, Long receiverId, Long giverId, BonusCategory category) {
         this.points = points;
         this.receiverId = receiverId;
         this.giverId = giverId;
+        this.category = category;
     }
 
     @Id
@@ -27,7 +28,7 @@ public class Bonus {
     Long id;
 
     @Column(name = "points", nullable = false)
-    int points;
+    Long points;
 
     @Column(name = "giver_id", nullable = false)
     Long giverId;
@@ -39,4 +40,7 @@ public class Bonus {
     @CreationTimestamp
     LocalDateTime givenAt;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    BonusCategory category;
 }

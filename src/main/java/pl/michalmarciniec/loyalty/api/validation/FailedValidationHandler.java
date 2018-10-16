@@ -17,12 +17,12 @@ public class FailedValidationHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException ex,
+            MethodArgumentNotValidException validationException,
             HttpHeaders headers,
             HttpStatus status,
             WebRequest request) {
 
-        List<String> errors = ex.getBindingResult().getGlobalErrors().stream()
+        List<String> errors = validationException.getBindingResult().getGlobalErrors().stream()
                 .map(DefaultMessageSourceResolvable::getCode)
                 .collect(Collectors.toList());
 

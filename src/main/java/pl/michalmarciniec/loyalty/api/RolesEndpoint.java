@@ -2,7 +2,7 @@ package pl.michalmarciniec.loyalty.api;
 
 import pl.michalmarciniec.loyalty.api.validation.GiveRoleCommandValidator;
 import pl.michalmarciniec.loyalty.domain.command.GiveRoleCommand;
-import pl.michalmarciniec.loyalty.security.RoleManager;
+import pl.michalmarciniec.loyalty.security.AuthorizationManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -19,13 +19,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 @RequestMapping("/roles")
 @RequiredArgsConstructor
 public class RolesEndpoint {
-    private final RoleManager roleManager;
+    private final AuthorizationManager authorizationManager;
     private final GiveRoleCommandValidator giveRoleCommandValidator;
 
     @RequestMapping(method = PUT, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public void giveRoleToMember(@RequestBody @Validated GiveRoleCommand giveRoleCommand) {
-        roleManager.giveRole(giveRoleCommand);
+        authorizationManager.giveRole(giveRoleCommand);
     }
 
     @InitBinder("giveRoleCommand")

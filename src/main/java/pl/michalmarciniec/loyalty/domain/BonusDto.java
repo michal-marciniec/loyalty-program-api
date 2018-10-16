@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Value
 public class BonusDto {
     Long id;
-    int points;
+    Long points;
     Long giverId;
     Long receiverId;
     LocalDateTime givenAt;

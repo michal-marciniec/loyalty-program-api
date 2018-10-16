@@ -2,10 +2,13 @@ package pl.michalmarciniec.loyalty.domain;
 
 import com.google.common.base.Preconditions;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -16,7 +19,7 @@ import static lombok.AccessLevel.PRIVATE;
 public class Member {
 
     @Builder
-    private Member(String email, String name, String avatarPath, Set<Role> roles) {
+    private Member(String email, String name, String avatarPath, List<Role> roles) {
         this.name = name;
         this.avatarPath = avatarPath;
         this.email = email;
@@ -43,7 +46,7 @@ public class Member {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     @Getter
-    Set<Role> roles = new HashSet<>();
+    List<Role> roles = new ArrayList<>();
 
     @Column(name = "email", nullable = false)
     @Getter
@@ -52,6 +55,17 @@ public class Member {
     public void addRole(Role role) {
         Preconditions.checkNotNull(role);
         roles.add(role);
+    }
+
+    public List<GrantedAuthority> getAuthorities() {
+        return Stream.concat(
+                getRoles().stream(),
+                getRoles().stream().flatMap(role -> role.getPermissions().stream())
+        ).collect(Collectors.toList());
+    }
+
+    public boolean hasAuthority(GrantedAuthority grantedAuthority) {
+        return getAuthorities().contains(grantedAuthority);
     }
 
 }

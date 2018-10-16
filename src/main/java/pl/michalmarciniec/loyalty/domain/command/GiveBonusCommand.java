@@ -1,5 +1,6 @@
 package pl.michalmarciniec.loyalty.domain.command;
 
+import pl.michalmarciniec.loyalty.domain.BonusCategoryName;
 import lombok.Value;
 
 import javax.validation.constraints.Max;
@@ -9,11 +10,11 @@ import javax.validation.constraints.NotNull;
 @Value
 public class GiveBonusCommand {
     @NotNull
-    Long giverId;
-    @NotNull
     Long receiverId;
     @NotNull
     @Min(1)
     @Max(10)
-    Integer points;
+    Long points;
+    @NotNull
+    BonusCategoryName category;
 }
