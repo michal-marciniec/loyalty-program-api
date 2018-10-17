@@ -1,8 +1,10 @@
-package pl.michalmarciniec.loyalty.domain;
+package pl.michalmarciniec.loyalty.domain.service;
 
 import pl.michalmarciniec.loyalty.db.BonusCategoryRepository;
 import pl.michalmarciniec.loyalty.db.BonusesRepository;
 import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommand;
+import pl.michalmarciniec.loyalty.domain.dto.BonusDto;
+import pl.michalmarciniec.loyalty.domain.entity.*;
 import pl.michalmarciniec.loyalty.security.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

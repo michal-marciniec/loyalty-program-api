@@ -1,9 +1,9 @@
 package pl.michalmarciniec.loyalty.api;
 
 import pl.michalmarciniec.loyalty.api.validation.GiveBonusCommandValidator;
-import pl.michalmarciniec.loyalty.domain.BonusDto;
-import pl.michalmarciniec.loyalty.domain.GiveBonusService;
 import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommand;
+import pl.michalmarciniec.loyalty.domain.dto.BonusDto;
+import pl.michalmarciniec.loyalty.domain.service.GiveBonusService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

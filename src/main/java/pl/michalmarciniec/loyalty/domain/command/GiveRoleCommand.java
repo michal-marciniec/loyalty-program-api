@@ -1,6 +1,6 @@
 package pl.michalmarciniec.loyalty.domain.command;
 
-import pl.michalmarciniec.loyalty.security.RoleName;
+import pl.michalmarciniec.loyalty.domain.entity.RoleName;
 import lombok.Value;
 
 import javax.validation.constraints.NotNull;

@@ -1,9 +1,6 @@
-package pl.michalmarciniec.loyalty.domain;
+package pl.michalmarciniec.loyalty.domain.entity;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -13,6 +10,7 @@ import java.time.LocalDateTime;
 @Table(name = "bonuses")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
+@Getter
 public class Bonus {
 
     @Builder

@@ -2,9 +2,9 @@ package pl.michalmarciniec.loyalty.security;
 
 import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.db.RolesRepository;
-import pl.michalmarciniec.loyalty.domain.Member;
-import pl.michalmarciniec.loyalty.domain.Role;
 import pl.michalmarciniec.loyalty.domain.command.GiveRoleCommand;
+import pl.michalmarciniec.loyalty.domain.entity.Member;
+import pl.michalmarciniec.loyalty.domain.entity.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;

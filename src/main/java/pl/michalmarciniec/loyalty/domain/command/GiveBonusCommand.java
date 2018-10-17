@@ -1,6 +1,6 @@
 package pl.michalmarciniec.loyalty.domain.command;
 
-import pl.michalmarciniec.loyalty.domain.BonusCategoryName;
+import pl.michalmarciniec.loyalty.domain.entity.BonusCategoryName;
 import lombok.Value;
 
 import javax.validation.constraints.Max;

@@ -1,7 +1,7 @@
 package pl.michalmarciniec.loyalty.api;
 
 import pl.michalmarciniec.loyalty.db.MembersRepository;
-import pl.michalmarciniec.loyalty.domain.RankingItemDto;
+import pl.michalmarciniec.loyalty.domain.dto.RankingItemDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;

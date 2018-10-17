@@ -1,7 +1,7 @@
 package pl.michalmarciniec.loyalty.db;
 
-import pl.michalmarciniec.loyalty.domain.BonusCategory;
-import pl.michalmarciniec.loyalty.domain.BonusCategoryName;
+import pl.michalmarciniec.loyalty.domain.entity.BonusCategory;
+import pl.michalmarciniec.loyalty.domain.entity.BonusCategoryName;
 
 import java.util.Optional;
 

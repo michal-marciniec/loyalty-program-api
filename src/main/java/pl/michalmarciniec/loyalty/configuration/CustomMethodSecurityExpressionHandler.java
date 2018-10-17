@@ -1,7 +1,7 @@
 package pl.michalmarciniec.loyalty.configuration;
 
-import pl.michalmarciniec.loyalty.security.PermissionName;
-import pl.michalmarciniec.loyalty.security.RoleName;
+import pl.michalmarciniec.loyalty.domain.entity.PermissionName;
+import pl.michalmarciniec.loyalty.domain.entity.RoleName;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.expression.spel.support.StandardEvaluationContext;

@@ -1,7 +1,7 @@
 package pl.michalmarciniec.loyalty.db;
 
-import pl.michalmarciniec.loyalty.domain.Bonus;
-import pl.michalmarciniec.loyalty.domain.BonusCategoryName;
+import pl.michalmarciniec.loyalty.domain.entity.Bonus;
+import pl.michalmarciniec.loyalty.domain.entity.BonusCategoryName;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 

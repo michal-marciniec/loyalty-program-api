@@ -2,8 +2,8 @@ package pl.michalmarciniec.loyalty.security;
 
 import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.db.RolesRepository;
-import pl.michalmarciniec.loyalty.domain.Member;
-import pl.michalmarciniec.loyalty.domain.Role;
+import pl.michalmarciniec.loyalty.domain.entity.Member;
+import pl.michalmarciniec.loyalty.domain.entity.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.AuthoritiesExtractor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;

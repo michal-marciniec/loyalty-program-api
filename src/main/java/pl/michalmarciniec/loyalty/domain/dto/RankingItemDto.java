@@ -1,5 +1,6 @@
-package pl.michalmarciniec.loyalty.domain;
+package pl.michalmarciniec.loyalty.domain.dto;
 
+import pl.michalmarciniec.loyalty.domain.entity.Member;
 import lombok.Value;
 
 @Value

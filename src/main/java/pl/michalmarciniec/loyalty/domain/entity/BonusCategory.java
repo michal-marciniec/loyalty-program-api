@@ -1,9 +1,6 @@
-package pl.michalmarciniec.loyalty.domain;
+package pl.michalmarciniec.loyalty.domain.entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,7 +8,17 @@ import javax.persistence.*;
 @Table(name = "bonus_categories")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
+@Getter
 public class BonusCategory {
+
+    @Builder
+    private BonusCategory(BonusCategoryName name, Permission permission, Long pointsLimit, Long limitPeriodInDays) {
+        this.name = name;
+        this.permission = permission;
+        this.pointsLimit = pointsLimit;
+        this.limitPeriodInDays = limitPeriodInDays;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -22,14 +29,11 @@ public class BonusCategory {
 
     @ManyToOne
     @JoinColumn(name = "permission_id")
-    @Getter
     Permission permission;
 
     @Column(name = "points_limit", nullable = false)
-    @Getter
     Long pointsLimit;
 
     @Column(name = "limit_period", nullable = false)
-    @Getter
     Long limitPeriodInDays;
 }

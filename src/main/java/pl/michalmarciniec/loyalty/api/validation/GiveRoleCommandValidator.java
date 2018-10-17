@@ -2,8 +2,8 @@ package pl.michalmarciniec.loyalty.api.validation;
 
 import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.db.RolesRepository;
-import pl.michalmarciniec.loyalty.domain.Member;
 import pl.michalmarciniec.loyalty.domain.command.GiveRoleCommand;
+import pl.michalmarciniec.loyalty.domain.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

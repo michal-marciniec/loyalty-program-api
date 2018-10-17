@@ -1,4 +1,4 @@
-package pl.michalmarciniec.loyalty.domain;
+package pl.michalmarciniec.loyalty.domain.entity;
 
 import com.google.common.base.Preconditions;
 import lombok.*;
@@ -16,6 +16,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Table(name = "members")
 @NoArgsConstructor(access = PRIVATE)
 @ToString
+@Getter
 public class Member {
 
     @Builder
@@ -28,15 +29,12 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
     Long id;
 
     @Column(name = "name", nullable = false, length = 100)
-    @Getter
     String name;
 
     @Column(name = "avatar_path", nullable = false, length = 100)
-    @Getter
     String avatarPath;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -45,11 +43,9 @@ public class Member {
             joinColumns = @JoinColumn(name = "member_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
-    @Getter
     List<Role> roles = new ArrayList<>();
 
     @Column(name = "email", nullable = false)
-    @Getter
     String email;
 
     public void addRole(Role role) {

@@ -1,7 +1,7 @@
 package pl.michalmarciniec.loyalty.api;
 
 import pl.michalmarciniec.loyalty.db.MembersRepository;
-import pl.michalmarciniec.loyalty.domain.MemberDto;
+import pl.michalmarciniec.loyalty.domain.dto.MemberDto;
 import pl.michalmarciniec.loyalty.security.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

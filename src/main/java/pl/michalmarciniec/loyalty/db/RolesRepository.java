@@ -1,7 +1,7 @@
 package pl.michalmarciniec.loyalty.db;
 
-import pl.michalmarciniec.loyalty.domain.Role;
-import pl.michalmarciniec.loyalty.security.RoleName;
+import pl.michalmarciniec.loyalty.domain.entity.Role;
+import pl.michalmarciniec.loyalty.domain.entity.RoleName;
 
 import java.util.Optional;
 

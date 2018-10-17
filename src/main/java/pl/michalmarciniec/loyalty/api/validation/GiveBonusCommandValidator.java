@@ -2,9 +2,9 @@ package pl.michalmarciniec.loyalty.api.validation;
 
 import pl.michalmarciniec.loyalty.db.BonusCategoryRepository;
 import pl.michalmarciniec.loyalty.db.MembersRepository;
-import pl.michalmarciniec.loyalty.domain.BonusCategory;
-import pl.michalmarciniec.loyalty.domain.Member;
 import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommand;
+import pl.michalmarciniec.loyalty.domain.entity.BonusCategory;
+import pl.michalmarciniec.loyalty.domain.entity.Member;
 import pl.michalmarciniec.loyalty.security.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

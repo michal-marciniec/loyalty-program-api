@@ -1,11 +1,10 @@
-package pl.michalmarciniec.loyalty.domain;
+package pl.michalmarciniec.loyalty.domain.entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
-import pl.michalmarciniec.loyalty.security.RoleName;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor(access = PRIVATE)
 @EqualsAndHashCode(of = {"id"})
 @ToString
+@Getter
 public class Role implements GrantedAuthority {
 
     public final static RoleName DEFAULT_ROLE_NAME = RoleName.ROLE_MEMBER;
@@ -27,7 +27,6 @@ public class Role implements GrantedAuthority {
     Long id;
 
     @Column(nullable = false, name = "name", length = 100, unique = true)
-    @Getter
     @Enumerated(EnumType.STRING)
     RoleName name;
 
@@ -37,7 +36,6 @@ public class Role implements GrantedAuthority {
             joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id")
     )
-    @Getter
     List<Permission> permissions = new ArrayList<>();
 
     @Override

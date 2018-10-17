@@ -1,4 +1,4 @@
-package pl.michalmarciniec.loyalty.domain;
+package pl.michalmarciniec.loyalty.domain.entity;
 
 public enum BonusCategoryName {
     OVERTIME,

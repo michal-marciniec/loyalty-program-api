@@ -1,5 +1,6 @@
-package pl.michalmarciniec.loyalty.domain;
+package pl.michalmarciniec.loyalty.domain.dto;
 
+import pl.michalmarciniec.loyalty.domain.entity.Member;
 import lombok.Builder;
 import lombok.Value;
 
@@ -14,10 +15,10 @@ public class MemberDto {
 
     public static MemberDto of(Member member) {
         return MemberDto.builder()
-                .id(member.id)
-                .email(member.email)
-                .avatarPath(member.avatarPath)
-                .name(member.name)
+                .id(member.getId())
+                .email(member.getEmail())
+                .avatarPath(member.getAvatarPath())
+                .name(member.getName())
                 .build();
     }
 
