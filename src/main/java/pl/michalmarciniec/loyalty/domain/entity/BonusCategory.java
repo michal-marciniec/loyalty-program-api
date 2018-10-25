@@ -9,19 +9,16 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @Getter
-public class BonusCategory {
+public class BonusCategory extends BaseEntity {
 
     @Builder
-    private BonusCategory(BonusCategoryName name, Permission permission, Long pointsLimit, Long limitPeriodInDays) {
+    private BonusCategory(BonusCategoryName name, Permission permission, Long pointsLimit, Long limitPeriodInDays, Long editPeriodInHours) {
         this.name = name;
         this.permission = permission;
         this.pointsLimit = pointsLimit;
         this.limitPeriodInDays = limitPeriodInDays;
+        this.editPeriodInHours = editPeriodInHours;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
 
     @Column(name = "name", nullable = false, unique = true)
     @Enumerated(EnumType.STRING)
@@ -36,4 +33,7 @@ public class BonusCategory {
 
     @Column(name = "limit_period", nullable = false)
     Long limitPeriodInDays;
+
+    @Column(name = "edit_period", nullable = false)
+    Long editPeriodInHours;
 }

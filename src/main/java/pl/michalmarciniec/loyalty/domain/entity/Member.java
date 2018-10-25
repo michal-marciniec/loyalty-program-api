@@ -17,7 +17,7 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor(access = PRIVATE)
 @ToString
 @Getter
-public class Member {
+public class Member extends BaseEntity {
 
     @Builder
     private Member(String email, String name, String avatarPath, List<Role> roles) {
@@ -26,10 +26,6 @@ public class Member {
         this.email = email;
         this.roles = roles;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
 
     @Column(name = "name", nullable = false, length = 100)
     String name;

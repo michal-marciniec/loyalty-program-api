@@ -18,13 +18,9 @@ import static lombok.AccessLevel.PRIVATE;
 @EqualsAndHashCode(of = {"id"})
 @ToString
 @Getter
-public class Role implements GrantedAuthority {
+public class Role extends BaseEntity implements GrantedAuthority {
 
     public final static RoleName DEFAULT_ROLE_NAME = RoleName.ROLE_MEMBER;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
 
     @Column(nullable = false, name = "name", length = 100, unique = true)
     @Enumerated(EnumType.STRING)

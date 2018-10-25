@@ -4,12 +4,18 @@ CREATE TABLE members (
   avatar_path VARCHAR(100) NOT NULL,
   email       VARCHAR(100) NOT NULL UNIQUE,
 
+  created_at DATETIME NOT NULL,
+  edited_at DATETIME NOT NULL,
+
   PRIMARY KEY (id)
 );
 
 CREATE TABLE permissions (
     id BIGINT AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL UNIQUE,
+
+    created_at DATETIME NOT NULL,
+    edited_at DATETIME NOT NULL,
 
     PRIMARY KEY(id)
 );
@@ -20,6 +26,10 @@ CREATE TABLE bonus_categories (
   permission_id BIGINT NOT NULL,
   points_limit BIGINT NOT NULL,
   limit_period BIGINT NOT NULL,
+  edit_period BIGINT NOT NULL,
+
+  created_at DATETIME NOT NULL,
+  edited_at DATETIME NOT NULL,
 
   PRIMARY KEY (id),
   FOREIGN KEY (permission_id) REFERENCES permissions (id)
@@ -30,8 +40,11 @@ CREATE TABLE bonuses (
   points      BIGINT   NOT NULL,
   giver_id    BIGINT   NOT NULL,
   receiver_id BIGINT   NOT NULL,
-  given_at    DATETIME NOT NULL,
   category_id BIGINT   NOT NULL,
+  description VARCHAR(300),
+
+  created_at DATETIME NOT NULL,
+  edited_at DATETIME NOT NULL,
 
   PRIMARY KEY (id),
   FOREIGN KEY (giver_id) REFERENCES members (id),
@@ -42,6 +55,9 @@ CREATE TABLE bonuses (
 CREATE TABLE roles (
   id   BIGINT AUTO_INCREMENT,
   name VARCHAR(100) NOT NULL UNIQUE,
+
+  created_at DATETIME NOT NULL,
+  edited_at DATETIME NOT NULL,
 
   PRIMARY KEY (id)
 );
@@ -62,5 +78,5 @@ CREATE TABLE roles_permissions (
   FOREIGN KEY (permission_id) REFERENCES permissions (id)
 );
 
-INSERT INTO roles (id, name) VALUES (1, 'ROLE_MEMBER');
+INSERT INTO roles (id, name, created_at, edited_at) VALUES (1, 'ROLE_MEMBER', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
 

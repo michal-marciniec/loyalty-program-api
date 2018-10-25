@@ -15,14 +15,14 @@ public interface MembersRepository extends JpaRepositoryWrapper<Member, Long> {
 
     @Query(value = "SELECT new pl.michalmarciniec.loyalty.domain.dto.RankingItemDto(p, SUM(a.points))" +
             " FROM Member p LEFT JOIN Bonus a ON p.id = a.receiverId " +
-            " AND a.givenAt BETWEEN :startDate AND :endDate" +
+            " AND a.createdAt BETWEEN :startDate AND :endDate" +
             " GROUP BY p.id ORDER BY SUM(a.points) DESC")
     List<RankingItemDto> getRankings(@Param("startDate") LocalDateTime startDate,
                                      @Param("endDate") LocalDateTime endDate);
 
     @Query(value = "SELECT new pl.michalmarciniec.loyalty.domain.dto.RankingItemDto(p, SUM(a.points))" +
             " FROM Member p LEFT JOIN Bonus a ON p.id = a.receiverId " +
-            " WHERE p.id = :memberId AND a.givenAt BETWEEN :startDate AND :endDate" +
+            " WHERE p.id = :memberId AND a.createdAt BETWEEN :startDate AND :endDate" +
             " GROUP BY p.id")
     RankingItemDto getMemberRanking(@Param("memberId") Long memberId,
                                     @Param("startDate") LocalDateTime startDate,

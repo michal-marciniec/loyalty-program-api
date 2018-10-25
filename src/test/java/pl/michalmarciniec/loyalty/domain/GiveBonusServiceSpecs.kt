@@ -27,7 +27,7 @@ class GiveBonusServiceSpec : Spek({
         val giveBonusService = GiveBonusService(bonusesRepository, authenticationService, bonusCategoryRepository)
 
         it("Give valid points number to another user") {
-            val command = GiveBonusCommand(1, 2, BonusCategoryName.OVERTIME)
+            val command = GiveBonusCommand(1, 2, BonusCategoryName.OVERTIME, "Thanks for staying late")
             _when(bonusCategoryRepository.findByName(BonusCategoryName.OVERTIME)).thenReturn(Optional.of(mockBonusCategory()))
             _when(bonusesRepository.save(any<Bonus>())).thenReturn(mockBonus(command))
             _when(authenticationService.currentMember).thenReturn(mockCurrentMember())

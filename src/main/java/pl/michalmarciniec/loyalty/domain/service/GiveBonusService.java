@@ -57,6 +57,7 @@ public class GiveBonusService {
                 .receiverId(giveBonusCommand.getReceiverId())
                 .points(giveBonusCommand.getPoints())
                 .category(bonusCategory)
+                .description(giveBonusCommand.getDescription())
                 .build();
     }
 
