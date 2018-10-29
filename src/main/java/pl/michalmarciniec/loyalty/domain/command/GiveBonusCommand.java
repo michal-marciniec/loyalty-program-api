@@ -19,5 +19,6 @@ public class GiveBonusCommand {
     @NotNull
     BonusCategoryName category;
     @Length(max = 300)
+    @NotNull
     String description;
 }

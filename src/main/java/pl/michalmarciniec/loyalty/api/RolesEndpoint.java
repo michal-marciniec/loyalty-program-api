@@ -29,7 +29,7 @@ public class RolesEndpoint {
     }
 
     @InitBinder("giveRoleCommand")
-    public void setupBinder(WebDataBinder binder) {
+    private void setupBinder(WebDataBinder binder) {
         binder.addValidators(giveRoleCommandValidator);
     }
 }

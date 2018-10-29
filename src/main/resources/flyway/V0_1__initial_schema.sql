@@ -41,7 +41,7 @@ CREATE TABLE bonuses (
   giver_id    BIGINT   NOT NULL,
   receiver_id BIGINT   NOT NULL,
   category_id BIGINT   NOT NULL,
-  description VARCHAR(300),
+  description VARCHAR(300) NOT NULL,
 
   created_at DATETIME NOT NULL,
   edited_at DATETIME NOT NULL,

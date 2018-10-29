@@ -13,11 +13,9 @@ public class EditBonusCommand {
     Long id;
     @Min(1)
     @Max(10)
+    @NotNull
     Long points;
     @Length(max = 300)
+    @NotNull
     String description;
-
-    public boolean isEmpty() {
-        return points == null && description == null;
-    }
 }

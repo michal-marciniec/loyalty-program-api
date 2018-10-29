@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 
 @Component
@@ -25,9 +25,8 @@ public class EditBonusCommandValidator extends CommandValidator implements Valid
     public void validate(Object target, Errors errors) {
         EditBonusCommand command = (EditBonusCommand) target;
         Optional<Bonus> bonus = bonusesRepository.findById(command.getId());
-        validate(Arrays.asList(
-                new Condition(bonus.isPresent(), "Bonus should already exist"),
-                new Condition(!command.isEmpty(), "Command cannot be empty")
+        validate(Collections.singletonList(
+                new Condition(bonus.isPresent(), "Bonus should already exist")
         ), errors);
     }
 }

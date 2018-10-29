@@ -41,13 +41,14 @@ public class BonusesEndpoint {
         return ResponseEntity.ok(commandResult);
     }
 
-    @InitBinder(value = {"giveBonusCommand", "editBonusCommand"})
-    public void setupBinder(WebDataBinder binder) {
-        binder.addValidators(
-                giveBonusCommandValidator,
-                editBonusCommandValidator
-        );
+    @InitBinder("giveBonusCommand")
+    private void initGiveBonusCommandBinder(WebDataBinder binder) {
+        binder.setValidator(giveBonusCommandValidator);
     }
 
+    @InitBinder("editBonusCommand")
+    private void initEditBonusCommandBinder(WebDataBinder binder) {
+        binder.setValidator(editBonusCommandValidator);
+    }
 
 }

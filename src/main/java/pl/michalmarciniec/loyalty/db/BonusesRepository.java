@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 public interface BonusesRepository extends JpaRepositoryWrapper<Bonus, Long> {
 
-    @Query(value = "SELECT SUM(a.points) FROM Bonus a " +
+    @Query(value = "SELECT COALESCE(SUM(a.points), 0) FROM Bonus a " +
             "WHERE a.giverId = :giverId " +
             "AND a.category.name = :category " +
             "AND a.createdAt BETWEEN :beginDate AND :endDate")

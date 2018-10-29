@@ -1,5 +1,6 @@
 package pl.michalmarciniec.loyalty.domain.entity;
 
+import com.google.common.base.Preconditions;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,16 +31,15 @@ public class Bonus extends BaseEntity {
     Long receiverId;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     BonusCategory category;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 300, nullable = false)
     String description;
 
     public void changeDescriptionAndPoints(String description, Long points) {
-        if (points != null) {
-            this.points = points;
-        }
+        Preconditions.checkNotNull(description, points);
         this.description = description;
+        this.points = points;
     }
 }

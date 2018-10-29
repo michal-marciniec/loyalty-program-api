@@ -34,7 +34,7 @@ public class EditBonusService {
 
     public boolean hasPermissionToEditBonus(Long bonusId) {
         Bonus bonus = getEntityOrFail(() -> bonusesRepository.findById(bonusId));
-        return isCurrentMemberTheGiver(bonus) && isFirstEditionOf(bonus) && exceededEditPeriod(bonus);
+        return isCurrentMemberTheGiver(bonus) && isFirstEditionOf(bonus) && editPeriodNotExceeded(bonus);
     }
 
     private boolean isCurrentMemberTheGiver(Bonus bonus) {
@@ -46,9 +46,9 @@ public class EditBonusService {
                 .isEqual(bonus.getCreatedAt().truncatedTo(SECONDS));
     }
 
-    private boolean exceededEditPeriod(Bonus bonus) {
+    private boolean editPeriodNotExceeded(Bonus bonus) {
         Long editPeriodInHours = bonus.getCategory().getEditPeriodInHours();
-        return LocalDateTime.now().isAfter(bonus.getEditedAt().plusHours(editPeriodInHours));
+        return LocalDateTime.now().isBefore(bonus.getEditedAt().plusHours(editPeriodInHours));
     }
 
 }

@@ -41,7 +41,7 @@ public class Member extends BaseEntity {
     )
     List<Role> roles = new ArrayList<>();
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, length = 100)
     String email;
 
     public void addRole(Role role) {

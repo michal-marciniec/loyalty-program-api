@@ -25,7 +25,7 @@ public class BonusCategory extends BaseEntity {
     BonusCategoryName name;
 
     @ManyToOne
-    @JoinColumn(name = "permission_id")
+    @JoinColumn(name = "permission_id", nullable = false)
     Permission permission;
 
     @Column(name = "points_limit", nullable = false)
