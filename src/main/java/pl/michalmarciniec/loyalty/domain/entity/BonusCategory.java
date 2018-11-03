@@ -7,18 +7,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "bonus_categories")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode(of = "name", callSuper = false)
 @ToString
 @Getter
+@Builder
 public class BonusCategory extends BaseEntity {
-
-    @Builder
-    private BonusCategory(BonusCategoryName name, Permission permission, Long pointsLimit, Long limitPeriodInDays, Long editPeriodInHours) {
-        this.name = name;
-        this.permission = permission;
-        this.pointsLimit = pointsLimit;
-        this.limitPeriodInDays = limitPeriodInDays;
-        this.editPeriodInHours = editPeriodInHours;
-    }
 
     @Column(name = "name", nullable = false, unique = true)
     @Enumerated(EnumType.STRING)

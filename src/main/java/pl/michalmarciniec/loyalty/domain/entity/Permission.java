@@ -1,9 +1,6 @@
 package pl.michalmarciniec.loyalty.domain.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -13,14 +10,12 @@ import static lombok.AccessLevel.PRIVATE;
 @Entity
 @Table(name = "permissions")
 @NoArgsConstructor(access = PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode(of = "name", callSuper = false)
 @ToString
 @Getter
+@Builder
 public class Permission extends BaseEntity implements GrantedAuthority {
-
-    @Builder
-    private Permission(PermissionName name) {
-        this.name = name;
-    }
 
     @Column(nullable = false, name = "name", length = 100, unique = true)
     @Enumerated(EnumType.STRING)

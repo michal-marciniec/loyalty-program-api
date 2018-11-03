@@ -1,9 +1,6 @@
 package pl.michalmarciniec.loyalty.domain.entity;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -15,9 +12,11 @@ import static lombok.AccessLevel.PRIVATE;
 @Entity
 @Table(name = "roles")
 @NoArgsConstructor(access = PRIVATE)
-@EqualsAndHashCode(of = {"id"})
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode(of = "name", callSuper = false)
 @ToString
 @Getter
+@Builder
 public class Role extends BaseEntity implements GrantedAuthority {
 
     public final static RoleName DEFAULT_ROLE_NAME = RoleName.ROLE_MEMBER;

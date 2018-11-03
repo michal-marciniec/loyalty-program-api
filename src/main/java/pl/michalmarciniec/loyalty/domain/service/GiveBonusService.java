@@ -44,8 +44,7 @@ public class GiveBonusService {
                 LocalDateTime.now().minusDays(bonusCategory.getLimitPeriodInDays()),
                 LocalDateTime.now());
 
-        return authenticationService.getCurrentMember()
-                .hasAuthority(requiredPermission) && givenPointsForBonusesOfType < bonusCategory.getPointsLimit();
+        return currentMember.hasAuthority(requiredPermission) && givenPointsForBonusesOfType < bonusCategory.getPointsLimit();
     }
 
     private Bonus buildBonus(GiveBonusCommand giveBonusCommand) {

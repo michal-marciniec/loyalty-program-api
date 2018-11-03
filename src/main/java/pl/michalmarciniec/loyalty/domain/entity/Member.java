@@ -15,17 +15,11 @@ import static lombok.AccessLevel.PRIVATE;
 @Entity
 @Table(name = "members")
 @NoArgsConstructor(access = PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @Getter
+@Builder
 public class Member extends BaseEntity {
-
-    @Builder
-    private Member(String email, String name, String avatarPath, List<Role> roles) {
-        this.name = name;
-        this.avatarPath = avatarPath;
-        this.email = email;
-        this.roles = roles;
-    }
 
     @Column(name = "name", nullable = false, length = 100)
     String name;

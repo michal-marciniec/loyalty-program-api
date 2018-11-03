@@ -14,7 +14,7 @@ import static pl.michalmarciniec.loyalty.db.JpaRepositoryWrapper.getEntityOrFail
 
 @Service
 @RequiredArgsConstructor
-public class AuthorizationManager {
+public class AuthorizationService {
 
     private final RolesRepository rolesRepository;
     private final MembersRepository membersRepository;
