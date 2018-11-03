@@ -1,21 +1,15 @@
 package pl.michalmarciniec.loyalty.test.commons
 
-import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommand
-import pl.michalmarciniec.loyalty.domain.entity.*
+import pl.michalmarciniec.loyalty.domain.entity.BonusCategory
 import pl.michalmarciniec.loyalty.domain.entity.BonusCategoryName.OVERTIME
+import pl.michalmarciniec.loyalty.domain.entity.Permission
 import pl.michalmarciniec.loyalty.domain.entity.PermissionName.MANAGE_OVERTIME
+import pl.michalmarciniec.loyalty.domain.entity.Member
+import pl.michalmarciniec.loyalty.domain.entity.Role
 import pl.michalmarciniec.loyalty.domain.entity.RoleName.OVERTIME_MANAGER
 import pl.michalmarciniec.loyalty.domain.entity.RoleName.ROLE_MEMBER
 import java.util.Collections.emptyList
 import java.util.Collections.singletonList
-
-fun mockBonus(giveBonusCommand: GiveBonusCommand): Bonus {
-    return Bonus.builder()
-            .giverId(1)
-            .receiverId(giveBonusCommand.receiverId)
-            .points(giveBonusCommand.points)
-            .build()
-}
 
 fun mockOvertimeCategory10Days100Points(): BonusCategory {
     return BonusCategory.builder()

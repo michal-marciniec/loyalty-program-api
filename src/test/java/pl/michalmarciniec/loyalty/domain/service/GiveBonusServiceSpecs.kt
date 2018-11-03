@@ -6,7 +6,6 @@ import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommand
 import pl.michalmarciniec.loyalty.domain.entity.Bonus
 import pl.michalmarciniec.loyalty.domain.entity.BonusCategoryName.OVERTIME
 import pl.michalmarciniec.loyalty.security.AuthenticationService
-import pl.michalmarciniec.loyalty.test.commons.mockBonus
 import pl.michalmarciniec.loyalty.test.commons.mockOvertimeCategory10Days100Points
 import pl.michalmarciniec.loyalty.test.commons.mockMemberAsOvertimeManager
 import pl.michalmarciniec.loyalty.test.commons.mockMemberWithNoPermissions
@@ -68,5 +67,14 @@ class GiveBonusServiceSpecs : Spek({
         }
     }
 })
+
+fun mockBonus(giveBonusCommand: GiveBonusCommand): Bonus {
+    return Bonus.builder()
+            .giverId(1)
+            .receiverId(giveBonusCommand.receiverId)
+            .points(giveBonusCommand.points)
+            .description(giveBonusCommand.description)
+            .build()
+}
 
 

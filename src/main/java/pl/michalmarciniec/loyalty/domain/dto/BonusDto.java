@@ -11,6 +11,7 @@ public class BonusDto {
     Long points;
     Long giverId;
     Long receiverId;
+    String description;
 
     public static BonusDto of(Bonus bonus) {
         return BonusDto.builder()
@@ -18,6 +19,7 @@ public class BonusDto {
                 .giverId(bonus.getGiverId())
                 .points(bonus.getPoints())
                 .receiverId(bonus.getReceiverId())
+                .description(bonus.getDescription())
                 .build();
     }
 }
