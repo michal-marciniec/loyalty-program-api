@@ -6,7 +6,7 @@ import pl.michalmarciniec.loyalty.domain.entity.Permission
 import pl.michalmarciniec.loyalty.domain.entity.PermissionName.MANAGE_OVERTIME
 import pl.michalmarciniec.loyalty.domain.entity.Member
 import pl.michalmarciniec.loyalty.domain.entity.Role
-import pl.michalmarciniec.loyalty.domain.entity.RoleName.OVERTIME_MANAGER
+import pl.michalmarciniec.loyalty.domain.entity.RoleName.ROLE_MODERATOR
 import pl.michalmarciniec.loyalty.domain.entity.RoleName.ROLE_MEMBER
 import java.util.Collections.emptyList
 import java.util.Collections.singletonList
@@ -20,17 +20,17 @@ fun mockOvertimeCategory10Days100Points(): BonusCategory {
             .build()
 }
 
-fun mockMemberAsOvertimeManager(): Member {
-    val overtimeManagerRole: Role = Role.builder()
-            .name(OVERTIME_MANAGER)
-            .permissions(singletonList(Permission.builder().name(MANAGE_OVERTIME).build()))
+fun mockMemberAsModerator(): Member {
+    val moderator: Role = Role.builder()
+            .name(ROLE_MODERATOR)
+            .permissions(ArrayList(singletonList(Permission.builder().name(MANAGE_OVERTIME).build())))
             .build()
 
     return Member.builder()
-            .avatarPath("overtime.png")
-            .email("overtime-manager@sample.com")
-            .name("overtime-manager")
-            .roles(singletonList(overtimeManagerRole)).build()
+            .avatarPath("moderator.png")
+            .email("moderator@sample.com")
+            .name("moderator")
+            .roles(ArrayList(singletonList(moderator))).build()
 }
 
 fun mockMemberWithNoPermissions(): Member {
@@ -40,5 +40,5 @@ fun mockMemberWithNoPermissions(): Member {
             .avatarPath("default-avatar.png")
             .email("member@sample.com")
             .name("member")
-            .roles(singletonList(memberRole)).build()
+            .roles(ArrayList(singletonList(memberRole))).build()
 }
