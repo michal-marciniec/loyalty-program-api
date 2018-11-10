@@ -3,7 +3,9 @@ package pl.michalmarciniec.loyalty.domain.service;
 import pl.michalmarciniec.loyalty.db.BonusesRepository;
 import pl.michalmarciniec.loyalty.domain.command.EditBonusCommand;
 import pl.michalmarciniec.loyalty.domain.dto.BonusDto;
+import pl.michalmarciniec.loyalty.domain.dto.BonusDto.BonusDtoBuilder;
 import pl.michalmarciniec.loyalty.domain.entity.Bonus;
+import pl.michalmarciniec.loyalty.mapper.DtoMapper;
 import pl.michalmarciniec.loyalty.security.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +31,7 @@ public class EditBonusService {
         Bonus bonus = getEntityOrFail(() -> bonusesRepository.findById(editBonusCommand.getId()));
         log.debug("Editing bonus: {}", bonus);
         bonus.changeDescriptionAndPoints(editBonusCommand.getDescription(), editBonusCommand.getPoints());
-        return BonusDto.of(bonus);
+        return DtoMapper.map(bonus, BonusDtoBuilder.class).build();
     }
 
     public boolean hasPermissionToEditBonus(Long bonusId) {

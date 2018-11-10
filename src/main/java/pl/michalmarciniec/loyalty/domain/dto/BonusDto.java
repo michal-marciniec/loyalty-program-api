@@ -1,6 +1,5 @@
 package pl.michalmarciniec.loyalty.domain.dto;
 
-import pl.michalmarciniec.loyalty.domain.entity.Bonus;
 import lombok.Builder;
 import lombok.Value;
 
@@ -12,14 +11,4 @@ public class BonusDto {
     Long giverId;
     Long receiverId;
     String description;
-
-    public static BonusDto of(Bonus bonus) {
-        return BonusDto.builder()
-                .id(bonus.getId())
-                .giverId(bonus.getGiverId())
-                .points(bonus.getPoints())
-                .receiverId(bonus.getReceiverId())
-                .description(bonus.getDescription())
-                .build();
-    }
 }

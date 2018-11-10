@@ -2,6 +2,8 @@ package pl.michalmarciniec.loyalty.api;
 
 import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.domain.dto.MemberDto;
+import pl.michalmarciniec.loyalty.domain.dto.MemberDto.MemberDtoBuilder;
+import pl.michalmarciniec.loyalty.mapper.DtoMapper;
 import pl.michalmarciniec.loyalty.security.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +26,14 @@ public class MembersEndpoint {
     @RequestMapping(method = GET)
     public ResponseEntity<List<MemberDto>> getAllMembers() {
         return ResponseEntity.ok(membersRepository.findAll().stream()
-                .map(MemberDto::of)
+                .map(member -> DtoMapper.map(member, MemberDtoBuilder.class).build())
                 .collect(Collectors.toList()));
     }
 
     @RequestMapping(method = GET, path = "/me")
     public ResponseEntity<MemberDto> getCurrentMember() {
-        return ResponseEntity.ok(MemberDto.of(authenticationService.getCurrentMember()));
+        MemberDto memberDto = DtoMapper.map(authenticationService.getCurrentMember(), MemberDtoBuilder.class).build();
+        return ResponseEntity.ok(memberDto);
     }
 
 }
