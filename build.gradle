@@ -23,6 +23,7 @@ plugins {
 }
 
 apply plugin: "java"
+apply plugin: "idea"
 apply plugin: "eclipse"
 apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
@@ -68,6 +69,8 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     compile("org.flywaydb:flyway-core:5.0.2")
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.0")
+    compile("com.querydsl:querydsl-jpa:4.1.4")
+    compile("com.querydsl:querydsl-apt:4.1.4:jpa")
     compile("org.modelmapper:modelmapper:1.1.0")
     runtime("com.h2database:h2")
     runtime("mysql:mysql-connector-java")
@@ -92,3 +95,11 @@ compileTestKotlin {
         jvmTarget = "${javaVersion}"
     }
 }
+
+idea {
+    module {
+        sourceDirs += file('generated/')
+        generatedSourceDirs += file('generated/')
+    }
+}
+
