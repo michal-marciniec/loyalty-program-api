@@ -1,6 +1,6 @@
 package pl.michalmarciniec.loyalty.domain.service;
 
-import pl.michalmarciniec.loyalty.db.BonusCategoryRepository;
+import pl.michalmarciniec.loyalty.db.BonusesCategoriesRepository;
 import pl.michalmarciniec.loyalty.db.BonusesRepository;
 import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommand;
 import pl.michalmarciniec.loyalty.domain.dto.BonusDto;
@@ -25,7 +25,7 @@ public class GiveBonusService {
 
     private final BonusesRepository bonusesRepository;
     private final AuthenticationService authenticationService;
-    private final BonusCategoryRepository bonusCategoryRepository;
+    private final BonusesCategoriesRepository bonusesCategoriesRepository;
 
     @Transactional
     @PreAuthorize("@giveBonusService.hasPermissionToGiveBonus(#giveBonusCommand.getCategory())")
@@ -37,7 +37,7 @@ public class GiveBonusService {
     }
 
     public boolean hasPermissionToGiveBonus(BonusCategoryName categoryName) {
-        BonusCategory bonusCategory = getEntityOrFail(() -> bonusCategoryRepository.findByName(categoryName));
+        BonusCategory bonusCategory = getEntityOrFail(() -> bonusesCategoriesRepository.findByName(categoryName));
         Permission requiredPermission = bonusCategory.getPermission();
         Member currentMember = authenticationService.getCurrentMember();
         Long givenPointsForBonusesOfType = bonusesRepository.getGivenPointsForBonusesOfType(
@@ -51,7 +51,7 @@ public class GiveBonusService {
 
     private Bonus buildBonus(GiveBonusCommand giveBonusCommand) {
         BonusCategoryName categoryName = giveBonusCommand.getCategory();
-        BonusCategory bonusCategory = getEntityOrFail(() -> bonusCategoryRepository.findByName(categoryName));
+        BonusCategory bonusCategory = getEntityOrFail(() -> bonusesCategoriesRepository.findByName(categoryName));
         Long giverId = authenticationService.getCurrentMember().getId();
         return Bonus.builder()
                 .giverId(giverId)

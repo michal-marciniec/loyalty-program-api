@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-public interface MembersRepository extends JpaRepositoryWrapper<Member, Long> {
+public interface MembersRepository extends JpaRepositoryWrapper<Member> {
 
     Optional<Member> findOneByEmail(String email);
 

@@ -1,6 +1,6 @@
 package pl.michalmarciniec.loyalty.api.validation;
 
-import pl.michalmarciniec.loyalty.db.BonusCategoryRepository;
+import pl.michalmarciniec.loyalty.db.BonusesCategoriesRepository;
 import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommand;
 import pl.michalmarciniec.loyalty.domain.entity.BonusCategory;
@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class GiveBonusCommandValidator extends CommandValidator implements Validator {
     private final MembersRepository membersRepository;
-    private final BonusCategoryRepository bonusCategoryRepository;
+    private final BonusesCategoriesRepository bonusesCategoriesRepository;
     private final AuthenticationService authenticationService;
 
     @Override
@@ -30,7 +30,7 @@ public class GiveBonusCommandValidator extends CommandValidator implements Valid
     public void validate(Object target, Errors errors) {
         GiveBonusCommand command = (GiveBonusCommand) target;
         Optional<Member> receiver = membersRepository.findById(command.getReceiverId());
-        Optional<BonusCategory> bonusCategory = bonusCategoryRepository.findByName(command.getCategory());
+        Optional<BonusCategory> bonusCategory = bonusesCategoriesRepository.findByName(command.getCategory());
 
         Long giverId = authenticationService.getCurrentMember().getId();
         validate(Arrays.asList(

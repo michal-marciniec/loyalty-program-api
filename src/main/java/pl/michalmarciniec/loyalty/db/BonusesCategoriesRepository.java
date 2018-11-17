@@ -5,6 +5,6 @@ import pl.michalmarciniec.loyalty.domain.entity.BonusCategoryName;
 
 import java.util.Optional;
 
-public interface BonusCategoryRepository extends JpaRepositoryWrapper<BonusCategory, Long> {
+public interface BonusesCategoriesRepository extends JpaRepositoryWrapper<BonusCategory> {
     Optional<BonusCategory> findByName(BonusCategoryName name);
 }

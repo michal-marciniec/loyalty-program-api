@@ -46,8 +46,14 @@ public class Member extends BaseEntity {
     public List<GrantedAuthority> getAuthorities() {
         return Stream.concat(
                 getRoles().stream(),
-                getRoles().stream().flatMap(role -> role.getPermissions().stream())
+                getPermissions().stream()
         ).collect(Collectors.toList());
+    }
+
+    public List<GrantedAuthority> getPermissions() {
+        return getRoles().stream()
+                .flatMap(role -> role.getPermissions().stream())
+                .collect(Collectors.toList());
     }
 
     public boolean hasAuthority(GrantedAuthority grantedAuthority) {

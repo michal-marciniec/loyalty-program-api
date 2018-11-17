@@ -1,6 +1,6 @@
 package pl.michalmarciniec.loyalty.domain.service
 
-import pl.michalmarciniec.loyalty.db.BonusCategoryRepository
+import pl.michalmarciniec.loyalty.db.BonusesCategoriesRepository
 import pl.michalmarciniec.loyalty.db.BonusesRepository
 import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommand
 import pl.michalmarciniec.loyalty.domain.entity.Bonus
@@ -26,7 +26,7 @@ class GiveBonusServiceSpecs : Spek({
     describe("Responsible for giving bonus to a user") {
         val bonusesRepository = mock<BonusesRepository>(BonusesRepository::class.java)
         val authenticationService = mock<AuthenticationService>(AuthenticationService::class.java)
-        val bonusCategoryRepository = mock<BonusCategoryRepository>(BonusCategoryRepository::class.java)
+        val bonusCategoryRepository = mock<BonusesCategoriesRepository>(BonusesCategoriesRepository::class.java)
         val giveBonusService = GiveBonusService(bonusesRepository, authenticationService, bonusCategoryRepository)
 
         it("Give valid points number to another user") {
