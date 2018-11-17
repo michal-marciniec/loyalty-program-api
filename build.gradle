@@ -72,6 +72,8 @@ dependencies {
     compile("com.querydsl:querydsl-jpa:4.1.4")
     compile("com.querydsl:querydsl-apt:4.1.4:jpa")
     compile("org.modelmapper:modelmapper:1.1.0")
+    compile("com.querydsl:querydsl-jpa:4.1.4")
+    compile("com.querydsl:querydsl-apt:4.1.4:jpa")
     runtime("com.h2database:h2")
     runtime("mysql:mysql-connector-java")
     runtime("org.postgresql:postgresql")
@@ -95,6 +97,14 @@ compileTestKotlin {
         jvmTarget = "${javaVersion}"
     }
 }
+
+idea {
+    module {
+        sourceDirs += file('src/main/generated')
+        generatedSourceDirs += file('src/main/generated')
+    }
+}
+
 
 idea {
     module {

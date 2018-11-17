@@ -8,9 +8,11 @@ import pl.michalmarciniec.loyalty.domain.command.EditBonusCommand;
 import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommand;
 import pl.michalmarciniec.loyalty.domain.command.SearchBonusesCommand;
 import pl.michalmarciniec.loyalty.domain.dto.BonusDto;
+import pl.michalmarciniec.loyalty.domain.dto.BonusDto.BonusDtoBuilder;
 import pl.michalmarciniec.loyalty.domain.entity.Bonus;
 import pl.michalmarciniec.loyalty.domain.service.EditBonusService;
 import pl.michalmarciniec.loyalty.domain.service.GiveBonusService;
+import pl.michalmarciniec.loyalty.mapper.DtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,15 +40,16 @@ public class BonusesEndpoint {
 
     @GetMapping
     public ResponseEntity<List<BonusDto>> getBonuses(SearchBonusesCommand command) {
-        List<Bonus> bonuses = new SearchQuery<>(bonusesRepository)
+        List<BonusDto> bonuses = new SearchQuery<>(bonusesRepository)
                 .addPredicate(command.getStartDate(), (builder, value) -> builder.and(bonus.createdAt.after(value)))
                 .addPredicate(command.getEndDate(), (builder, value) -> builder.and(bonus.createdAt.before(value)))
                 .addPredicate(command.getMemberId(), (builder, value) -> builder.and(bonus.receiverId.eq(value)))
-                .find();
+                .find()
+                .stream()
+                .map(bonus -> DtoMapper.map(bonus, BonusDtoBuilder.class).build())
+                .collect(Collectors.toList());
 
-        return ResponseEntity.ok(bonuses.stream()
-                .map(BonusDto::of)
-                .collect(Collectors.toList()));
+        return ResponseEntity.ok(bonuses);
     }
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
@@ -57,8 +60,8 @@ public class BonusesEndpoint {
 
     @PatchMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<BonusDto> editBonus(@RequestBody @Validated EditBonusCommand editBonusCommand) {
-        BonusDto commandResult = editBonusService.editBonus(editBonusCommand);
-        return ResponseEntity.ok(commandResult);
+        Bonus bonus = editBonusService.editBonus(editBonusCommand);
+        return ResponseEntity.ok(DtoMapper.map(bonus, BonusDtoBuilder.class).build());
     }
 
     @DeleteMapping(path = "{/bonusId}")

@@ -14,4 +14,5 @@ public class BonusDto {
     Long receiverId;
     String description;
     LocalDateTime givenAt;
+    LocalDateTime createdAt;
 }

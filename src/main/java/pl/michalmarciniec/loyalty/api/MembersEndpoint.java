@@ -4,6 +4,7 @@ import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.domain.dto.MemberDto;
 import pl.michalmarciniec.loyalty.domain.dto.MemberDto.MemberDtoBuilder;
 import pl.michalmarciniec.loyalty.mapper.DtoMapper;
+import pl.michalmarciniec.loyalty.domain.entity.Member;
 import pl.michalmarciniec.loyalty.security.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,8 @@ public class MembersEndpoint {
     @GetMapping(path = "/{memberId}")
     public ResponseEntity<MemberDto> getMember(@PathVariable Long memberId) {
         Member member = getEntityOrFail(() -> membersRepository.findById(memberId));
-        return ResponseEntity.ok(MemberDto.of(member));
+        MemberDto memberDto = DtoMapper.map(member, MemberDtoBuilder.class).build();
+        return ResponseEntity.ok(memberDto);
     }
 
     @GetMapping(path = "/me")

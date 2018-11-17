@@ -33,6 +33,7 @@ public class Member extends BaseEntity {
             joinColumns = @JoinColumn(name = "member_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
+    @Builder.Default
     List<Role> roles = new ArrayList<>();
 
     @Column(name = "email", nullable = false, length = 100)

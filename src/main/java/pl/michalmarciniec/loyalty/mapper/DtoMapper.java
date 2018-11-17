@@ -5,13 +5,16 @@ import org.modelmapper.convention.NamingConventions;
 
 public class DtoMapper {
 
-    public static <S, D> D map(S source, Class<D> destination) {
+    private static final ModelMapper mapper;
 
-        ModelMapper mapper = new ModelMapper();
+    static {
+        mapper = new ModelMapper();
         mapper.getConfiguration()
                 .setSourceNamingConvention(NamingConventions.NONE)
                 .setDestinationNamingConvention(NamingConventions.NONE);
+    }
 
+    public static <S, D> D map(S source, Class<D> destination) {
         return mapper.map(source, destination);
     }
 }
