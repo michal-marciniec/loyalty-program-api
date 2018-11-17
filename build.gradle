@@ -104,12 +104,3 @@ idea {
         generatedSourceDirs += file('src/main/generated')
     }
 }
-
-
-idea {
-    module {
-        sourceDirs += file('generated/')
-        generatedSourceDirs += file('generated/')
-    }
-}
-
