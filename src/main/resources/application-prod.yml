@@ -8,6 +8,7 @@ spring:
       ddl-auto: create
 
 security:
+  allowedOrigins: "http://localhost:3000,http://localhost:3003"
   oauth2:
     client:
       clientId: <GOOGLE_CLIENT_ID>

@@ -18,3 +18,10 @@ logging:
     org:
       hibernate:
         type: trace
+security:
+  allowedOrigins: "*"
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
