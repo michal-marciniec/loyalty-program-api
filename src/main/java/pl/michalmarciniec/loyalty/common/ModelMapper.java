@@ -1,14 +1,13 @@
-package pl.michalmarciniec.loyalty.mapper;
+package pl.michalmarciniec.loyalty.common;
 
-import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.NamingConventions;
 
-public class DtoMapper {
+public class ModelMapper {
 
-    private static final ModelMapper mapper;
+    private static final org.modelmapper.ModelMapper mapper;
 
     static {
-        mapper = new ModelMapper();
+        mapper = new org.modelmapper.ModelMapper();
         mapper.getConfiguration()
                 .setSourceNamingConvention(NamingConventions.NONE)
                 .setDestinationNamingConvention(NamingConventions.NONE);

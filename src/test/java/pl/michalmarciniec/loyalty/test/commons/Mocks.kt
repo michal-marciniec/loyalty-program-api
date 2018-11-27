@@ -30,7 +30,7 @@ fun mockMemberAsModerator(): Member {
             .avatarPath("moderator.png")
             .email("moderator@sample.com")
             .name("moderator")
-            .roles(ArrayList(singletonList(moderator))).build()
+            .roles(HashSet(singletonList(moderator))).build()
 }
 
 fun mockMemberWithNoPermissions(): Member {
@@ -40,5 +40,5 @@ fun mockMemberWithNoPermissions(): Member {
             .avatarPath("default-avatar.png")
             .email("member@sample.com")
             .name("member")
-            .roles(ArrayList(singletonList(memberRole))).build()
+            .roles(HashSet(singletonList(memberRole))).build()
 }

@@ -1,9 +1,9 @@
 package pl.michalmarciniec.loyalty.api;
 
+import pl.michalmarciniec.loyalty.common.ModelMapper;
 import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.domain.dto.MemberDto;
 import pl.michalmarciniec.loyalty.domain.dto.MemberDto.MemberDtoBuilder;
-import pl.michalmarciniec.loyalty.mapper.DtoMapper;
 import pl.michalmarciniec.loyalty.domain.entity.Member;
 import pl.michalmarciniec.loyalty.security.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -29,20 +29,20 @@ public class MembersEndpoint {
     @GetMapping
     public ResponseEntity<List<MemberDto>> getAllMembers() {
         return ResponseEntity.ok(membersRepository.findAll().stream()
-                .map(member -> DtoMapper.map(member, MemberDtoBuilder.class).build())
+                .map(member -> ModelMapper.map(member, MemberDtoBuilder.class).build())
                 .collect(Collectors.toList()));
     }
 
     @GetMapping(path = "/{memberId}")
     public ResponseEntity<MemberDto> getMember(@PathVariable Long memberId) {
         Member member = getEntityOrFail(() -> membersRepository.findById(memberId));
-        MemberDto memberDto = DtoMapper.map(member, MemberDtoBuilder.class).build();
+        MemberDto memberDto = ModelMapper.map(member, MemberDtoBuilder.class).build();
         return ResponseEntity.ok(memberDto);
     }
 
     @GetMapping(path = "/me")
     public ResponseEntity<MemberDto> getCurrentMember() {
-        MemberDto memberDto = DtoMapper.map(authenticationService.getCurrentMember(), MemberDtoBuilder.class).build();
+        MemberDto memberDto = ModelMapper.map(authenticationService.getCurrentMember(), MemberDtoBuilder.class).build();
         return ResponseEntity.ok(memberDto);
     }
 

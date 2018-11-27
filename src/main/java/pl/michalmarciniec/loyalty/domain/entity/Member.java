@@ -5,8 +5,9 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,8 +34,15 @@ public class Member extends BaseEntity {
             joinColumns = @JoinColumn(name = "member_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
-    @Builder.Default
-    List<Role> roles = new ArrayList<>();
+    Set<Role> roles = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "members_rewards",
+            joinColumns = @JoinColumn(name = "member_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "reward_id", referencedColumnName = "id")
+    )
+    Set<Reward> rewards = new HashSet<>();
 
     @Column(name = "email", nullable = false, length = 100)
     String email;

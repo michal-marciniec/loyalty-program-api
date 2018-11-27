@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @ControllerAdvice
 public class FailedValidationHandler extends ResponseEntityExceptionHandler {
@@ -25,9 +26,12 @@ public class FailedValidationHandler extends ResponseEntityExceptionHandler {
             HttpStatus status,
             WebRequest request) {
 
-        List<String> errors = validationException.getBindingResult().getGlobalErrors().stream()
-                .map(DefaultMessageSourceResolvable::getCode)
-                .collect(Collectors.toList());
+        List<String> errors = Stream.concat(
+                validationException.getBindingResult().getGlobalErrors().stream()
+                        .map(DefaultMessageSourceResolvable::getCode),
+                validationException.getBindingResult().getFieldErrors().stream()
+                        .map(DefaultMessageSourceResolvable::getDefaultMessage)
+        ).collect(Collectors.toList());
 
         ErrorDto errorInfo = new ErrorDto("Command validation failed", errors);
         return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);

@@ -54,7 +54,7 @@ public class AuthenticationServiceProd implements AuthenticationService {
                 .email(extractAuthDetail(authenticationDetails, AUTH_DETAILS_EMAIL))
                 .name(extractAuthDetail(authenticationDetails, AUTH_DETAILS_NAME))
                 .avatarPath(extractAuthDetail(authenticationDetails, AUTH_DETAILS_PICTURE))
-                .roles(new ArrayList<>(Collections.singletonList(defaultRole)))
+                .roles(new HashSet<>(Collections.singletonList(defaultRole)))
                 .build();
         return membersRepository.save(member);
     }

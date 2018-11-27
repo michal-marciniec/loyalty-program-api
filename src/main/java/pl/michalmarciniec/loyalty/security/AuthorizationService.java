@@ -21,10 +21,11 @@ public class AuthorizationService {
 
     @Transactional
     @PreAuthorize("hasRole(T(RoleName).ROLE_ADMIN.name())")
-    public void giveRole(GiveRoleCommand giveRoleCommand) {
+    public Role giveRole(GiveRoleCommand giveRoleCommand) {
         Role role = getEntityOrFail(() -> rolesRepository.findByName(giveRoleCommand.getRoleName()));
         Member member = getEntityOrFail(() -> membersRepository.findById(giveRoleCommand.getMemberId()));
         member.addRole(role);
+        return role;
     }
 
 }

@@ -1,12 +1,11 @@
 package pl.michalmarciniec.loyalty.domain.service;
 
+import pl.michalmarciniec.loyalty.common.ModelMapper;
 import pl.michalmarciniec.loyalty.db.BonusesCategoriesRepository;
 import pl.michalmarciniec.loyalty.db.BonusesRepository;
 import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommand;
-import pl.michalmarciniec.loyalty.domain.dto.BonusDto;
-import pl.michalmarciniec.loyalty.domain.dto.BonusDto.BonusDtoBuilder;
 import pl.michalmarciniec.loyalty.domain.entity.*;
-import pl.michalmarciniec.loyalty.mapper.DtoMapper;
+import pl.michalmarciniec.loyalty.domain.entity.Bonus.BonusBuilder;
 import pl.michalmarciniec.loyalty.security.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,11 +28,11 @@ public class GiveBonusService {
 
     @Transactional
     @PreAuthorize("@giveBonusService.hasPermissionToGiveBonus(#giveBonusCommand.getCategory())")
-    public BonusDto giveBonus(GiveBonusCommand giveBonusCommand) {
+    public Bonus giveBonus(GiveBonusCommand giveBonusCommand) {
         log.debug("Attempting to give bonus: {}", giveBonusCommand);
         Bonus savedBonus = bonusesRepository.save(buildBonus(giveBonusCommand));
         log.debug("Bonus {} given", savedBonus);
-        return DtoMapper.map(savedBonus, BonusDtoBuilder.class).build();
+        return savedBonus;
     }
 
     public boolean hasPermissionToGiveBonus(BonusCategoryName categoryName) {
@@ -53,12 +52,9 @@ public class GiveBonusService {
         BonusCategoryName categoryName = giveBonusCommand.getCategory();
         BonusCategory bonusCategory = getEntityOrFail(() -> bonusesCategoriesRepository.findByName(categoryName));
         Long giverId = authenticationService.getCurrentMember().getId();
-        return Bonus.builder()
+        return ModelMapper.map(giveBonusCommand, BonusBuilder.class)
                 .giverId(giverId)
-                .receiverId(giveBonusCommand.getReceiverId())
-                .points(giveBonusCommand.getPoints())
                 .category(bonusCategory)
-                .description(giveBonusCommand.getDescription())
                 .build();
     }
 
