@@ -5,6 +5,7 @@ local
 .gradle
 /build/
 /out/
+/src/main/generated/
 
 ### STS ###
 .apt_generated

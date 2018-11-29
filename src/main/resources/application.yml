@@ -11,6 +11,9 @@ server:
 flyway:
   locations: classpath:flyway
 
+management:
+  contextPath: /actuator
+
 ---
 
 spring:

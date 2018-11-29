@@ -20,6 +20,10 @@ logging:
         type: trace
 security:
   allowedOrigins: "*"
+
+management:
+  security:
+    enabled: false
 logging:
   level:
     org:
