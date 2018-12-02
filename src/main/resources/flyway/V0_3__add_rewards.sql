@@ -12,10 +12,17 @@ CREATE TABLE rewards (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE members_rewards (
+CREATE TABLE member_rewards (
+    id BIGINT NOT NULL,
+    price BIGINT NOT NULL,
+    description VARCHAR(300) NOT NULL,
+    logo_path VARCHAR(100) NOT NULL,
     member_id BIGINT NOT NULL,
-    reward_id BIGINT NOT NULL,
+    status VARCHAR(100) NOT NULL,
 
-    FOREIGN KEY (member_id) REFERENCES members (id),
-    FOREIGN KEY (reward_id) REFERENCES rewards (id)
+    created_at DATETIME NOT NULL,
+    edited_at DATETIME NOT NULL,
+
+    PRIMARY KEY (id),
+    FOREIGN KEY (member_id) REFERENCES members (id)
 );

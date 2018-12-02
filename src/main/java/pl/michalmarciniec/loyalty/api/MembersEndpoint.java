@@ -4,6 +4,7 @@ import pl.michalmarciniec.loyalty.common.ModelMapper;
 import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.domain.dto.MemberDto;
 import pl.michalmarciniec.loyalty.domain.dto.MemberDto.MemberDtoBuilder;
+import pl.michalmarciniec.loyalty.domain.dto.ClaimedRewardDto;
 import pl.michalmarciniec.loyalty.domain.entity.Member;
 import pl.michalmarciniec.loyalty.security.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static pl.michalmarciniec.loyalty.db.JpaRepositoryWrapper.getEntityOrFail;
+import static java.util.Arrays.asList;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @LoyaltyProgramApi
@@ -38,6 +40,14 @@ public class MembersEndpoint {
         Member member = getEntityOrFail(() -> membersRepository.findById(memberId));
         MemberDto memberDto = ModelMapper.map(member, MemberDtoBuilder.class).build();
         return ResponseEntity.ok(memberDto);
+    }
+
+    @GetMapping(path = "/me/rewards")
+    public ResponseEntity<List<ClaimedRewardDto>> getClaimedRewards() {
+        Member member = authenticationService.getCurrentMember();
+        return ResponseEntity.ok(member.getRewards().stream()
+                .map(claimedReward -> ModelMapper.map(asList(claimedReward, claimedReward.getRewardInfo()), ClaimedRewardDto.ClaimedRewardDtoBuilder.class).build())
+                .collect(Collectors.toList()));
     }
 
     @GetMapping(path = "/me")

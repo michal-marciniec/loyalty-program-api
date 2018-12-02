@@ -16,7 +16,7 @@ import static pl.michalmarciniec.loyalty.db.JpaRepositoryWrapper.getEntityOrFail
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceDev implements AuthenticationService {
-    private final static Long REGULAR_MEMBER_ID = 2L;
+    private final static Long ADMIN_ID = 1L;
     private final MembersRepository membersRepository;
 
     @Override
@@ -31,7 +31,7 @@ public class AuthenticationServiceDev implements AuthenticationService {
 
     @Override
     public Member getCurrentMember() {
-        return getEntityOrFail(() -> membersRepository.findById(REGULAR_MEMBER_ID));
+        return getEntityOrFail(() -> membersRepository.findById(ADMIN_ID));
     }
 
     private final class DevAuthenticationException extends RuntimeException {

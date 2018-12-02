@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 
-public interface BonusesRepository extends JpaRepositoryWrapper<Bonus> {
+public interface BonusesRepository extends JpaRepositoryWrapper<Bonus, Long> {
 
     @Query(value = "SELECT COALESCE(SUM(a.points), 0) FROM Bonus a " +
             "WHERE a.giverId = :giverId " +

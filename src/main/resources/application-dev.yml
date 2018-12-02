@@ -24,8 +24,3 @@ security:
 management:
   security:
     enabled: false
-logging:
-  level:
-    org:
-      hibernate:
-        type: trace

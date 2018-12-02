@@ -66,6 +66,7 @@ CREATE TABLE members_roles (
   member_id BIGINT NOT NULL,
   role_id   BIGINT NOT NULL,
 
+  PRIMARY KEY (member_id, role_id),
   FOREIGN KEY (member_id) REFERENCES members (id),
   FOREIGN KEY (role_id) REFERENCES roles (id)
 );
@@ -74,9 +75,7 @@ CREATE TABLE roles_permissions (
   role_id   BIGINT NOT NULL,
   permission_id BIGINT NOT NULL,
 
+  PRIMARY KEY (role_id, permission_id),
   FOREIGN KEY (role_id) REFERENCES roles (id),
   FOREIGN KEY (permission_id) REFERENCES permissions (id)
 );
-
-INSERT INTO roles (id, name, created_at, edited_at) VALUES (1, 'ROLE_MEMBER', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
-

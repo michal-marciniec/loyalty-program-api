@@ -4,6 +4,7 @@ import pl.michalmarciniec.loyalty.domain.command.EditRewardCommand;
 import lombok.*;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
@@ -16,14 +17,9 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class Reward extends BaseEntity {
-    @Column(name = "price", nullable = false)
-    Long price;
 
-    @Column(name = "description", nullable = false, length = 300)
-    String description;
-
-    @Column(name = "logo_path", nullable = false, length = 100)
-    String logoPath;
+    @Embedded
+    RewardInfo rewardInfo;
 
     @Column(name = "amount", nullable = false)
     Long amount = 1L;
@@ -33,9 +29,9 @@ public class Reward extends BaseEntity {
 
     public void edit(EditRewardCommand editRewardCommand) {
         this.amount = editRewardCommand.getAmount();
-        this.description = editRewardCommand.getDescription();
+        this.rewardInfo.description = editRewardCommand.getDescription();
         this.expirationDate = editRewardCommand.getExpirationDate();
-        this.logoPath = editRewardCommand.getLogoPath();
-        this.price = editRewardCommand.getPrice();
+        this.rewardInfo.logoPath = editRewardCommand.getLogoPath();
+        this.rewardInfo.price = editRewardCommand.getPrice();
     }
 }

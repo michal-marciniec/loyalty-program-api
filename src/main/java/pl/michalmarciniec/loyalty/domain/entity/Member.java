@@ -17,7 +17,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Table(name = "members")
 @NoArgsConstructor(access = PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@ToString
+@ToString(exclude = "rewards")
 @Getter
 @Builder
 public class Member extends BaseEntity {
@@ -36,13 +36,9 @@ public class Member extends BaseEntity {
     )
     Set<Role> roles = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "members_rewards",
-            joinColumns = @JoinColumn(name = "member_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "reward_id", referencedColumnName = "id")
-    )
-    Set<Reward> rewards = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "member_id")
+    Set<ClaimedReward> rewards = new HashSet<>();
 
     @Column(name = "email", nullable = false, length = 100)
     String email;
