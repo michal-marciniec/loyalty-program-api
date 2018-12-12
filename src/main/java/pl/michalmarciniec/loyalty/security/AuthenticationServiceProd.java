@@ -4,7 +4,9 @@ import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.db.RolesRepository;
 import pl.michalmarciniec.loyalty.domain.entity.Member;
 import pl.michalmarciniec.loyalty.domain.entity.Role;
+import pl.michalmarciniec.loyalty.domain.entity.Wallet;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,9 +19,16 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceProd implements AuthenticationService {
+
     protected static final String AUTH_DETAILS_NAME = "name";
     protected static final String AUTH_DETAILS_EMAIL = "email";
     protected static final String AUTH_DETAILS_PICTURE = "picture";
+
+    @Value("${loyalty-program.initial-gained-points-pool}")
+    private long initialGainedPointsPool;
+
+    @Value("${loyalty-program.initial-give-away-points-pool}")
+    private long initialGiveAwayPointsPool;
 
     private final MembersRepository membersRepository;
     private final RolesRepository rolesRepository;
@@ -55,6 +64,7 @@ public class AuthenticationServiceProd implements AuthenticationService {
                 .name(extractAuthDetail(authenticationDetails, AUTH_DETAILS_NAME))
                 .avatarPath(extractAuthDetail(authenticationDetails, AUTH_DETAILS_PICTURE))
                 .roles(new HashSet<>(Collections.singletonList(defaultRole)))
+                .wallet(Wallet.builder().gainedPoints(initialGainedPointsPool).giveAwayPool(initialGiveAwayPointsPool).build())
                 .build();
         return membersRepository.save(member);
     }

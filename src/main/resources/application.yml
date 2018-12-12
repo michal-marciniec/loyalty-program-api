@@ -16,3 +16,7 @@ flyway:
 
 management:
   contextPath: /actuator
+
+loyalty-program:
+  initial-gained-points-pool: 0
+  initial-give-away-points-pool: 10
