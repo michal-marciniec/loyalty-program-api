@@ -31,14 +31,14 @@ public class MembersEndpoint {
     @GetMapping
     public ResponseEntity<List<MemberDto>> getAllMembers() {
         return ResponseEntity.ok(membersRepository.findAll().stream()
-                .map(member -> ModelMapper.map(member, MemberDtoBuilder.class).build())
+                .map(member -> ModelMapper.map(asList(member, member.getWallet()), MemberDtoBuilder.class).build())
                 .collect(Collectors.toList()));
     }
 
     @GetMapping(path = "/{memberId}")
     public ResponseEntity<MemberDto> getMember(@PathVariable Long memberId) {
         Member member = getEntityOrFail(() -> membersRepository.findById(memberId));
-        MemberDto memberDto = ModelMapper.map(member, MemberDtoBuilder.class).build();
+        MemberDto memberDto = ModelMapper.map(asList(member, member.getWallet()), MemberDtoBuilder.class).build();
         return ResponseEntity.ok(memberDto);
     }
 
@@ -52,7 +52,8 @@ public class MembersEndpoint {
 
     @GetMapping(path = "/me")
     public ResponseEntity<MemberDto> getCurrentMember() {
-        MemberDto memberDto = ModelMapper.map(authenticationService.getCurrentMember(), MemberDtoBuilder.class).build();
+        Member member = authenticationService.getCurrentMember();
+        MemberDto memberDto = ModelMapper.map(asList(member, member.getWallet()), MemberDtoBuilder.class).build();
         return ResponseEntity.ok(memberDto);
     }
 

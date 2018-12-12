@@ -11,12 +11,11 @@ import pl.michalmarciniec.loyalty.domain.entity.RoleName.ROLE_MEMBER
 import java.util.Collections.emptyList
 import java.util.Collections.singletonList
 
-fun mockOvertimeCategory10Days100Points(): BonusCategory {
+fun mockOvertimeCategory100Points(): BonusCategory {
     return BonusCategory.builder()
             .name(OVERTIME)
-            .limitPeriodInDays(10)
-            .pointsLimit(100)
             .permission(Permission.builder().name(MANAGE_OVERTIME).build())
+            .pointsPool(100)
             .build()
 }
 

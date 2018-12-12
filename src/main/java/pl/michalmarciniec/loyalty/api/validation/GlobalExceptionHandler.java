@@ -1,6 +1,8 @@
 package pl.michalmarciniec.loyalty.api.validation;
 
 import pl.michalmarciniec.loyalty.db.EntityNotFoundException;
+import pl.michalmarciniec.loyalty.domain.entity.InsufficientPointsException;
+import pl.michalmarciniec.loyalty.domain.entity.PointsAlreadySpentException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,7 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @ControllerAdvice
-public class FailedValidationHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
@@ -45,6 +47,28 @@ public class FailedValidationHandler extends ResponseEntityExceptionHandler {
         );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(errorInfo);
+    }
+
+    @ExceptionHandler(InsufficientPointsException.class)
+    public ResponseEntity<ErrorDto> handleInsufficientPoints(InsufficientPointsException insufficientPointsException) {
+        ErrorDto errorInfo = new ErrorDto(
+                "Insufficient points",
+                Collections.singletonList(insufficientPointsException.getMessage())
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(errorInfo);
+    }
+
+    @ExceptionHandler(PointsAlreadySpentException.class)
+    public ResponseEntity<ErrorDto> handlePointsAlreadySpent(PointsAlreadySpentException pointsAlreadySpentException) {
+        ErrorDto errorInfo = new ErrorDto(
+                "Insufficient points",
+                Collections.singletonList(pointsAlreadySpentException.getMessage())
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(errorInfo);
     }
 }

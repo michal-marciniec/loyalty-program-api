@@ -6,7 +6,7 @@ import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommand
 import pl.michalmarciniec.loyalty.domain.entity.Bonus
 import pl.michalmarciniec.loyalty.domain.entity.BonusCategoryName.OVERTIME
 import pl.michalmarciniec.loyalty.security.AuthenticationService
-import pl.michalmarciniec.loyalty.test.commons.mockOvertimeCategory10Days100Points
+import pl.michalmarciniec.loyalty.test.commons.mockOvertimeCategory100Points
 import pl.michalmarciniec.loyalty.test.commons.mockMemberAsModerator
 import pl.michalmarciniec.loyalty.test.commons.mockMemberWithNoPermissions
 import org.assertj.core.api.Assertions.assertThat
@@ -27,12 +27,13 @@ class GiveBonusServiceSpecs : Spek({
         val bonusesRepository = mock<BonusesRepository>(BonusesRepository::class.java)
         val authenticationService = mock<AuthenticationService>(AuthenticationService::class.java)
         val bonusCategoryRepository = mock<BonusesCategoriesRepository>(BonusesCategoriesRepository::class.java)
-        val giveBonusService = GiveBonusService(bonusesRepository, authenticationService, bonusCategoryRepository)
+        val giveBonusStrategies = mock<GiveBonusStrategies>(GiveBonusStrategies::class.java)
+        val giveBonusService = GiveBonusService(bonusesRepository, authenticationService, bonusCategoryRepository, giveBonusStrategies)
 
         it("Give valid points number to another user") {
             val command = GiveBonusCommand(1, 2, OVERTIME, "Thanks for staying up late")
             val mockedBonus = mockBonus(command)
-            _when(bonusCategoryRepository.findByName(OVERTIME)).thenReturn(Optional.of(mockOvertimeCategory10Days100Points()))
+            _when(bonusCategoryRepository.findByName(OVERTIME)).thenReturn(Optional.of(mockOvertimeCategory100Points()))
             _when(bonusesRepository.save(any<Bonus>())).thenReturn(mockedBonus)
             _when(authenticationService.currentMember).thenReturn(mockMemberAsModerator())
 
@@ -43,25 +44,22 @@ class GiveBonusServiceSpecs : Spek({
         }
 
         it("Permit member to give bonus") {
-            _when(bonusCategoryRepository.findByName(OVERTIME)).thenReturn(Optional.of(mockOvertimeCategory10Days100Points()))
+            _when(bonusCategoryRepository.findByName(OVERTIME)).thenReturn(Optional.of(mockOvertimeCategory100Points()))
             _when(authenticationService.currentMember).thenReturn(mockMemberAsModerator())
-            _when(bonusesRepository.getGivenPointsForBonusesOfType(any(), any(), any(), any())).thenReturn(10)
 
             assertThat(giveBonusService.hasPermissionToGiveBonus(OVERTIME)).isTrue()
         }
 
         it("Deny member to give bonus, because of used points limits") {
-            _when(bonusCategoryRepository.findByName(OVERTIME)).thenReturn(Optional.of(mockOvertimeCategory10Days100Points()))
+            _when(bonusCategoryRepository.findByName(OVERTIME)).thenReturn(Optional.of(mockOvertimeCategory100Points()))
             _when(authenticationService.currentMember).thenReturn(mockMemberAsModerator())
-            _when(bonusesRepository.getGivenPointsForBonusesOfType(any(), any(), any(), any())).thenReturn(150)
 
             assertThat(giveBonusService.hasPermissionToGiveBonus(OVERTIME)).isFalse()
         }
 
         it("Deny member to give bonus, because of invalid permissions") {
-            _when(bonusCategoryRepository.findByName(OVERTIME)).thenReturn(Optional.of(mockOvertimeCategory10Days100Points()))
+            _when(bonusCategoryRepository.findByName(OVERTIME)).thenReturn(Optional.of(mockOvertimeCategory100Points()))
             _when(authenticationService.currentMember).thenReturn(mockMemberWithNoPermissions())
-            _when(bonusesRepository.getGivenPointsForBonusesOfType(any(), any(), any(), any())).thenReturn(10)
 
             assertThat(giveBonusService.hasPermissionToGiveBonus(OVERTIME)).isFalse()
         }

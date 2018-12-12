@@ -43,6 +43,9 @@ public class Member extends BaseEntity {
     @Column(name = "email", nullable = false, length = 100)
     String email;
 
+    @Embedded
+    Wallet wallet;
+
     public void addRole(Role role) {
         Preconditions.checkNotNull(role);
         roles.add(role);

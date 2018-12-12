@@ -1,6 +1,7 @@
 package pl.michalmarciniec.loyalty.domain.service
 
 import pl.michalmarciniec.loyalty.db.BonusesRepository
+import pl.michalmarciniec.loyalty.db.MembersRepository
 import pl.michalmarciniec.loyalty.domain.command.EditBonusCommand
 import pl.michalmarciniec.loyalty.domain.entity.Bonus
 import pl.michalmarciniec.loyalty.domain.entity.BonusCategory
@@ -21,7 +22,8 @@ class EditBonusServiceSpecs : Spek({
     describe("Responsible for editing a given bonus") {
         val bonusesRepository = mock<BonusesRepository>(BonusesRepository::class.java)
         val authenticationService = mock<AuthenticationService>(AuthenticationService::class.java)
-        val editBonusService = EditBonusService(bonusesRepository, authenticationService)
+        val membersRepository = mock<MembersRepository>(MembersRepository::class.java)
+        val editBonusService = EditBonusService(bonusesRepository, authenticationService, membersRepository)
         val currentMember = mockMemberWithNoPermissions()
 
         val editBonusCommand = EditBonusCommand(1, 10, "New description")

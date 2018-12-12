@@ -10,4 +10,6 @@ public class MemberDto {
     String email;
     String name;
     String avatarPath;
+    Long giveAwayPool;
+    Long gainedPoints;
 }

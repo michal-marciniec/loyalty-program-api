@@ -3,6 +3,8 @@ CREATE TABLE members (
   name        VARCHAR(100) NOT NULL,
   avatar_path VARCHAR(100) NOT NULL,
   email       VARCHAR(100) NOT NULL UNIQUE,
+  give_away_pool BIGINT NOT NULL,
+  gained_points BIGINT NOT NULL,
 
   created_at DATETIME NOT NULL,
   edited_at DATETIME NOT NULL,
@@ -24,8 +26,7 @@ CREATE TABLE bonus_categories (
   id          BIGINT AUTO_INCREMENT,
   name        VARCHAR(100) NOT NULL UNIQUE,
   permission_id BIGINT NOT NULL,
-  points_limit BIGINT NOT NULL,
-  limit_period BIGINT NOT NULL,
+  points_pool BIGINT,
   edit_period BIGINT NOT NULL,
 
   created_at DATETIME NOT NULL,

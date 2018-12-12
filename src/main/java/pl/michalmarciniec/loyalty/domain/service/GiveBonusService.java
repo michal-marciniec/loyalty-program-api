@@ -13,8 +13,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-
 import static pl.michalmarciniec.loyalty.db.JpaRepositoryWrapper.getEntityOrFail;
 
 @Service("giveBonusService")
@@ -25,11 +23,13 @@ public class GiveBonusService {
     private final BonusesRepository bonusesRepository;
     private final AuthenticationService authenticationService;
     private final BonusesCategoriesRepository bonusesCategoriesRepository;
+    private final GiveBonusStrategies giveBonusStrategies;
 
     @Transactional
     @PreAuthorize("@giveBonusService.hasPermissionToGiveBonus(#giveBonusCommand.getCategory())")
     public Bonus giveBonus(GiveBonusCommand giveBonusCommand) {
         log.debug("Attempting to give bonus: {}", giveBonusCommand);
+        giveBonusStrategies.getStrategy(giveBonusCommand.getCategory()).accept(giveBonusCommand);
         Bonus savedBonus = bonusesRepository.save(buildBonus(giveBonusCommand));
         log.debug("Bonus {} given", savedBonus);
         return savedBonus;
@@ -39,13 +39,7 @@ public class GiveBonusService {
         BonusCategory bonusCategory = getEntityOrFail(() -> bonusesCategoriesRepository.findByName(categoryName));
         Permission requiredPermission = bonusCategory.getPermission();
         Member currentMember = authenticationService.getCurrentMember();
-        Long givenPointsForBonusesOfType = bonusesRepository.getGivenPointsForBonusesOfType(
-                currentMember.getId(),
-                categoryName,
-                LocalDateTime.now().minusDays(bonusCategory.getLimitPeriodInDays()),
-                LocalDateTime.now());
-
-        return currentMember.hasAuthority(requiredPermission) && givenPointsForBonusesOfType < bonusCategory.getPointsLimit();
+        return currentMember.hasAuthority(requiredPermission);
     }
 
     private Bonus buildBonus(GiveBonusCommand giveBonusCommand) {

@@ -22,12 +22,21 @@ public class BonusCategory extends BaseEntity {
     @JoinColumn(name = "permission_id", nullable = false)
     Permission permission;
 
-    @Column(name = "points_limit", nullable = false)
-    Long pointsLimit;
-
-    @Column(name = "limit_period", nullable = false)
-    Long limitPeriodInDays;
+    @Column(name = "points_pool")
+    Long pointsPool;
 
     @Column(name = "edit_period", nullable = false)
     Long editPeriodInHours;
+
+    public void transferPoints(Wallet receiverWallet, Long points) {
+        subtractPoints(points);
+        receiverWallet.addPoints(points);
+    }
+
+    private void subtractPoints(Long points) {
+        if (points > pointsPool) {
+            throw new InsufficientPointsException();
+        }
+        pointsPool -= points;
+    }
 }

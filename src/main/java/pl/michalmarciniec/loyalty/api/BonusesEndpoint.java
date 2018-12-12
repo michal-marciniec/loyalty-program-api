@@ -10,6 +10,7 @@ import pl.michalmarciniec.loyalty.domain.command.SearchBonusesCommand;
 import pl.michalmarciniec.loyalty.domain.dto.BonusDto;
 import pl.michalmarciniec.loyalty.domain.dto.BonusDto.BonusDtoBuilder;
 import pl.michalmarciniec.loyalty.domain.entity.Bonus;
+import pl.michalmarciniec.loyalty.domain.service.DeleteBonusService;
 import pl.michalmarciniec.loyalty.domain.service.EditBonusService;
 import pl.michalmarciniec.loyalty.domain.service.GiveBonusService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static pl.michalmarciniec.loyalty.db.JpaRepositoryWrapper.getEntityOrFail;
 import static pl.michalmarciniec.loyalty.domain.entity.QBonus.bonus;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -32,6 +32,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class BonusesEndpoint {
     private final GiveBonusService giveBonusService;
     private final EditBonusService editBonusService;
+    private final DeleteBonusService deleteBonusService;
     private final BonusesRepository bonusesRepository;
 
     private final GiveBonusCommandValidator giveBonusCommandValidator;
@@ -62,12 +63,10 @@ public class BonusesEndpoint {
         return ResponseEntity.ok(ModelMapper.map(bonus, BonusDtoBuilder.class).build());
     }
 
-    @DeleteMapping(path = "{/bonusId}")
+    @DeleteMapping(path = "/{bonusId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity deleteBonus(@PathVariable Long bonusId) {
-        Bonus bonus = getEntityOrFail(() -> bonusesRepository.findById(bonusId));
-        bonusesRepository.delete(bonus);
-        return ResponseEntity.ok().build();
+    public void deleteBonus(@PathVariable Long bonusId) {
+        deleteBonusService.deleteBonus(bonusId);
     }
 
     @InitBinder("giveBonusCommand")
