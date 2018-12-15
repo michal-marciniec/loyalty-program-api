@@ -26,9 +26,13 @@ public class AuthenticationServiceProd implements AuthenticationService {
 
     @Value("${loyalty-program.initial-gained-points-pool}")
     private long initialGainedPointsPool;
+    @Value("${loyalty-program.walletGainedPointsPool}")
+    private long walletGainedPointsPool;
 
     @Value("${loyalty-program.initial-give-away-points-pool}")
     private long initialGiveAwayPointsPool;
+    @Value("${loyalty-program.walletGiveAwayPointsPool}")
+    private long walletGiveAwayPointsPool;
 
     private final MembersRepository membersRepository;
     private final RolesRepository rolesRepository;
@@ -64,7 +68,7 @@ public class AuthenticationServiceProd implements AuthenticationService {
                 .name(extractAuthDetail(authenticationDetails, AUTH_DETAILS_NAME))
                 .avatarPath(extractAuthDetail(authenticationDetails, AUTH_DETAILS_PICTURE))
                 .roles(new HashSet<>(Collections.singletonList(defaultRole)))
-                .wallet(Wallet.builder().gainedPoints(initialGainedPointsPool).giveAwayPool(initialGiveAwayPointsPool).build())
+                .wallet(Wallet.builder().gainedPoints(walletGainedPointsPool).giveAwayPool(walletGiveAwayPointsPool).build())
                 .build();
         return membersRepository.save(member);
     }

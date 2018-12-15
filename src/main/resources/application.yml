@@ -12,11 +12,21 @@ server:
   port: 8999
 
 flyway:
-  locations: classpath:flyway
+  locations: classpath:flyway/schema
 
 management:
   contextPath: /actuator
 
 loyalty-program:
-  initial-gained-points-pool: 0
-  initial-give-away-points-pool: 10
+  walletGainedPointsPool: 0
+  walletGiveAwayPointsPool: 10
+  specialPermissionPointsPool: 10
+  adminUsername: "admin@sample.com"
+  adminPassword: "admin7"
+  db:
+    samplesPath: ~
+
+tasks:
+  resetPoints:
+    walletCron: "0 0 1 * * MON"
+    specialPermissionCron: "0 0 1 * * *"

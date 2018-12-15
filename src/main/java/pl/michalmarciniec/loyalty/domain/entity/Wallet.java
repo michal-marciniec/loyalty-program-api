@@ -34,8 +34,8 @@ public class Wallet {
         giveAwayPool += bonus.points;
     }
 
-    public void resetGiveAwayPool(Long startValue) {
-        this.giveAwayPool = startValue;
+    public void resetGiveAwayPool(Long startingPool) {
+        this.giveAwayPool = startingPool;
     }
 
     void addPoints(Long points) {

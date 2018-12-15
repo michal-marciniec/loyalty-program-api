@@ -25,7 +25,7 @@ public class Member extends BaseEntity {
     @Column(name = "name", nullable = false, length = 100)
     String name;
 
-    @Column(name = "avatar_path", nullable = false, length = 100)
+    @Column(name = "avatar_path", nullable = false, length = 500)
     String avatarPath;
 
     @ManyToMany(fetch = FetchType.EAGER)

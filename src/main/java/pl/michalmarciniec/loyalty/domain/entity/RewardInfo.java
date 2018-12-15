@@ -19,6 +19,6 @@ class RewardInfo {
     @Column(name = "description", nullable = false, length = 300)
     String description;
 
-    @Column(name = "logo_path", nullable = false, length = 100)
+    @Column(name = "logo_path", nullable = false, length = 500)
     String logoPath;
 }

@@ -17,6 +17,10 @@ import org.mockito.Mockito.mock
 import java.util.*
 import org.mockito.Mockito.`when` as _when
 
+val bonusId = 1L
+val currentMember = mockMemberWithNoPermissions()
+val receiverId = 2L
+
 @RunWith(JUnitPlatform::class)
 class EditBonusServiceSpecs : Spek({
     describe("Responsible for editing a given bonus") {
@@ -24,46 +28,53 @@ class EditBonusServiceSpecs : Spek({
         val authenticationService = mock<AuthenticationService>(AuthenticationService::class.java)
         val membersRepository = mock<MembersRepository>(MembersRepository::class.java)
         val editBonusService = EditBonusService(bonusesRepository, authenticationService, membersRepository)
-        val currentMember = mockMemberWithNoPermissions()
-
-        val editBonusCommand = EditBonusCommand(1, 10, "New description")
-        _when(authenticationService.currentMember).thenReturn(currentMember)
 
         it("Edit a given bonus") {
-            _when(bonusesRepository.findById(1)).thenReturn(Optional.of(mockBonus(editBonusCommand, currentMember.id)))
+            val editBonusCommand = EditBonusCommand(bonusId, 10, "New description")
+            val receiver = mockMemberWithNoPermissions()
+
+            _when(bonusesRepository.findById(bonusId)).thenReturn(Optional.of(mockBonusBeforeEdition(10)))
+            _when(membersRepository.findById(receiverId)).thenReturn(Optional.of(receiver))
+            _when(authenticationService.currentMember).thenReturn(currentMember)
 
             val commandResult = editBonusService.editBonus(editBonusCommand)
 
             assertThat(commandResult.points).isEqualTo(10)
             assertThat(commandResult.description).isEqualTo("New description")
+
+            assertThat(currentMember.wallet.giveAwayPool).isEqualTo(15)
+            assertThat(currentMember.wallet.gainedPoints).isEqualTo(10)
+
+            assertThat(receiver.wallet.giveAwayPool).isEqualTo(20)
+            assertThat(receiver.wallet.gainedPoints).isEqualTo(15)
         }
 
         it("Permit member to edit bonus") {
-            _when(bonusesRepository.findById(1)).thenReturn(Optional.of(mockBonus(editBonusCommand, currentMember.id)))
-
-            assertThat(editBonusService.hasPermissionToEditBonus(1)).isTrue()
+            _when(bonusesRepository.findById(bonusId)).thenReturn(Optional.of(mockBonusBeforeEdition(10)))
+            _when(authenticationService.currentMember).thenReturn(currentMember)
+            assertThat(editBonusService.hasPermissionToEditBonus(bonusId)).isTrue()
         }
 
         it("Deny member to edit bonus, because he is not the giver") {
-            _when(bonusesRepository.findById(1)).thenReturn(Optional.of(mockBonus(editBonusCommand, 4)))
-
-            assertThat(editBonusService.hasPermissionToEditBonus(1)).isFalse()
+            _when(bonusesRepository.findById(bonusId)).thenReturn(Optional.of(mockBonusBeforeEdition(10)))
+            _when(authenticationService.currentMember).thenReturn(mockMemberWithNoPermissions())
+            assertThat(editBonusService.hasPermissionToEditBonus(bonusId)).isFalse()
         }
 
         it("Deny member to edit bonus, because edit period has been exceeded") {
-            _when(bonusesRepository.findById(1)).thenReturn(Optional.of(mockBonus(editBonusCommand, currentMember.id, 0)))
-
-            assertThat(editBonusService.hasPermissionToEditBonus(1)).isFalse()
+            _when(bonusesRepository.findById(bonusId)).thenReturn(Optional.of(mockBonusBeforeEdition(0)))
+            _when(authenticationService.currentMember).thenReturn(currentMember)
+            assertThat(editBonusService.hasPermissionToEditBonus(bonusId)).isFalse()
         }
-
     }
 })
 
-fun mockBonus(editBonusCommand: EditBonusCommand, giverId: Long, editPeriodInHours: Long = 5): Bonus {
+fun mockBonusBeforeEdition(editPeriodInHours: Long): Bonus {
     return Bonus.builder()
-            .giverId(giverId)
-            .description(editBonusCommand.description)
-            .points(editBonusCommand.points)
+            .points(5L)
+            .description("Old description")
             .category(BonusCategory.builder().editPeriodInHours(editPeriodInHours).build())
+            .giverId(currentMember.id)
+            .receiverId(receiverId)
             .build()
 }

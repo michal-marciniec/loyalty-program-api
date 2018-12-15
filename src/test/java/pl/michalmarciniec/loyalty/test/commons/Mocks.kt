@@ -1,11 +1,8 @@
 package pl.michalmarciniec.loyalty.test.commons
 
-import pl.michalmarciniec.loyalty.domain.entity.BonusCategory
+import pl.michalmarciniec.loyalty.domain.entity.*
 import pl.michalmarciniec.loyalty.domain.entity.BonusCategoryName.OVERTIME
-import pl.michalmarciniec.loyalty.domain.entity.Permission
 import pl.michalmarciniec.loyalty.domain.entity.PermissionName.MANAGE_OVERTIME
-import pl.michalmarciniec.loyalty.domain.entity.Member
-import pl.michalmarciniec.loyalty.domain.entity.Role
 import pl.michalmarciniec.loyalty.domain.entity.RoleName.ROLE_MODERATOR
 import pl.michalmarciniec.loyalty.domain.entity.RoleName.ROLE_MEMBER
 import java.util.Collections.emptyList
@@ -29,6 +26,7 @@ fun mockMemberAsModerator(): Member {
             .avatarPath("moderator.png")
             .email("moderator@sample.com")
             .name("moderator")
+            .wallet(Wallet.builder().giveAwayPool(10L).gainedPoints(0L).build())
             .roles(HashSet(singletonList(moderator))).build()
 }
 
@@ -39,5 +37,6 @@ fun mockMemberWithNoPermissions(): Member {
             .avatarPath("default-avatar.png")
             .email("member@sample.com")
             .name("member")
+            .wallet(Wallet.builder().giveAwayPool(20L).gainedPoints(10L).build())
             .roles(HashSet(singletonList(memberRole))).build()
 }

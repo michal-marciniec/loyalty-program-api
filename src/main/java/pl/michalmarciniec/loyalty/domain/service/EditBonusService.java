@@ -41,7 +41,7 @@ public class EditBonusService {
     }
 
     private void balanceWallets(Bonus bonus, Long points) {
-        Wallet giverWallet = getEntityOrFail(() -> membersRepository.findById(bonus.getGiverId())).getWallet();
+        Wallet giverWallet = authenticationService.getCurrentMember().getWallet();
         Wallet receiverWallet = getEntityOrFail(() -> membersRepository.findById(bonus.getReceiverId())).getWallet();
         giverWallet.cancelBonus(bonus, receiverWallet);
         giverWallet.transferPoints(receiverWallet, points);

@@ -19,6 +19,7 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import java.util.*
+import java.util.function.Consumer
 import org.mockito.Mockito.`when` as _when
 
 @RunWith(JUnitPlatform::class)
@@ -33,6 +34,7 @@ class GiveBonusServiceSpecs : Spek({
         it("Give valid points number to another user") {
             val command = GiveBonusCommand(1, 2, OVERTIME, "Thanks for staying up late")
             val mockedBonus = mockBonus(command)
+            _when(giveBonusStrategies.getStrategy(OVERTIME)).thenReturn(Consumer({ _ -> }))
             _when(bonusCategoryRepository.findByName(OVERTIME)).thenReturn(Optional.of(mockOvertimeCategory100Points()))
             _when(bonusesRepository.save(any<Bonus>())).thenReturn(mockedBonus)
             _when(authenticationService.currentMember).thenReturn(mockMemberAsModerator())
@@ -48,13 +50,6 @@ class GiveBonusServiceSpecs : Spek({
             _when(authenticationService.currentMember).thenReturn(mockMemberAsModerator())
 
             assertThat(giveBonusService.hasPermissionToGiveBonus(OVERTIME)).isTrue()
-        }
-
-        it("Deny member to give bonus, because of used points limits") {
-            _when(bonusCategoryRepository.findByName(OVERTIME)).thenReturn(Optional.of(mockOvertimeCategory100Points()))
-            _when(authenticationService.currentMember).thenReturn(mockMemberAsModerator())
-
-            assertThat(giveBonusService.hasPermissionToGiveBonus(OVERTIME)).isFalse()
         }
 
         it("Deny member to give bonus, because of invalid permissions") {
