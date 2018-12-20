@@ -1,7 +1,7 @@
 INSERT INTO permissions(name) VALUES('REGULAR_MEMBER');
 INSERT INTO permissions(name) VALUES('MANAGE_OVERTIME');
 
-INSERT INTO bonus_categories(name, permission_id, points_pool, edit_period) VALUES('NO_LIMIT', 1, 100, 1);
+INSERT INTO bonus_categories(name, permission_id, points_pool, edit_period) VALUES('NO_LIMIT', 1, NULL , 1);
 INSERT INTO bonus_categories(name, permission_id, points_pool, edit_period) VALUES('OVERTIME', 2, 50, 24);
 
 INSERT INTO roles(name) VALUES('ROLE_MEMBER');

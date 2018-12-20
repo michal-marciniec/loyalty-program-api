@@ -12,3 +12,7 @@ INSERT INTO bonuses(points, giver_id, receiver_id, category_id, description) VAL
 INSERT INTO member_rewards(member_id, price, description, logo_path, status) VALUES(2, 50, 'Banana', 'http://www.pngall.com/wp-content/uploads/2016/04/Banana-Free-Download-PNG.png', 'PENDING');
 INSERT INTO member_rewards(member_id, price, description, logo_path, status) VALUES(3, 30, 'Handshake', 'https://openclipart.org/download/276483/1490609861.svg', 'REALIZED');
 INSERT INTO member_rewards(member_id, price, description, logo_path, status) VALUES(3, 10000, 'Lamborghini', 'https://www.luxuryauto.rentals/wp-content/uploads/2015/10/sports-car-rentals-3-500x500.png', 'REJECTED');
+
+INSERT INTO members_roles(member_id, role_id) VALUES(2, 1);
+INSERT INTO members_roles(member_id, role_id) VALUES(3, 1);
+
