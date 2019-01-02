@@ -30,7 +30,7 @@ class AuthenticationServiceSpecs : Spek({
         val authenticationService = AuthenticationServiceProd(membersRepository, rolesRepository)
 
         it("Create member when extracting principal and no member in session found") {
-            _when(membersRepository.findOneByEmail(any())).thenReturn(Optional.empty())
+            _when(membersRepository.findOneByLogin(any())).thenReturn(Optional.empty())
             _when(rolesRepository.findByName(Role.DEFAULT_ROLE_NAME)).thenReturn(Optional.of(Role.builder().build()))
             _when(membersRepository.save(any<Member>())).then(returnsFirstArg<Answer<Member>>())
 
@@ -40,13 +40,13 @@ class AuthenticationServiceSpecs : Spek({
         }
 
         it("Get member from session when extracting principal") {
-            _when(membersRepository.findOneByEmail(any())).thenReturn(Optional.of(mockMemberAsModerator()))
+            _when(membersRepository.findOneByLogin(any())).thenReturn(Optional.of(mockMemberAsModerator()))
             val principal = authenticationService.extractPrincipal(mockAuthDetails()) as Member
             assertThat(principal.name).isEqualTo("moderator")
         }
 
         it("Provide member's authorities") {
-            _when(membersRepository.findOneByEmail(any())).thenReturn(Optional.of(mockMemberAsModerator()))
+            _when(membersRepository.findOneByLogin(any())).thenReturn(Optional.of(mockMemberAsModerator()))
             val authorities = authenticationService.extractAuthorities(mockAuthDetails())
             assertThat(authorities).containsExactly(
                     Role.builder().name(RoleName.ROLE_MODERATOR).build(),

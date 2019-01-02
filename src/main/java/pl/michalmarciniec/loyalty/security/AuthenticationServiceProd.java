@@ -44,7 +44,8 @@ public class AuthenticationServiceProd implements AuthenticationService {
 
     @Override
     public List<GrantedAuthority> extractAuthorities(Map<String, Object> authenticationDetails) {
-        return membersRepository.findOneByEmail(extractAuthDetail(authenticationDetails, AUTH_DETAILS_EMAIL))
+        String login = toLogin(extractAuthDetail(authenticationDetails, AUTH_DETAILS_EMAIL));
+        return membersRepository.findOneByLogin(login)
                 .map(Member::getAuthorities)
                 .orElse(Collections.emptyList());
     }
@@ -57,20 +58,25 @@ public class AuthenticationServiceProd implements AuthenticationService {
     }
 
     private Member getOrCreateMember(Map<String, Object> authenticationDetails) {
-        return membersRepository.findOneByEmail(extractAuthDetail(authenticationDetails, AUTH_DETAILS_EMAIL))
-                .orElseGet(() -> createMember(authenticationDetails));
+        String login = toLogin(extractAuthDetail(authenticationDetails, AUTH_DETAILS_EMAIL));
+        return membersRepository.findOneByLogin(login).orElseGet(() -> createMember(authenticationDetails));
     }
 
     private Member createMember(Map<String, Object> authenticationDetails) {
         Role defaultRole = rolesRepository.findByName(Role.DEFAULT_ROLE_NAME).orElseThrow(DefaultRoleNotFoundException::new);
+        String login = toLogin(extractAuthDetail(authenticationDetails, AUTH_DETAILS_EMAIL));
         Member member = Member.builder()
-                .email(extractAuthDetail(authenticationDetails, AUTH_DETAILS_EMAIL))
+                .login(login)
                 .name(extractAuthDetail(authenticationDetails, AUTH_DETAILS_NAME))
                 .avatarPath(extractAuthDetail(authenticationDetails, AUTH_DETAILS_PICTURE))
                 .roles(new HashSet<>(Collections.singletonList(defaultRole)))
                 .wallet(Wallet.builder().gainedPoints(walletGainedPointsPool).giveAwayPool(walletGiveAwayPointsPool).build())
                 .build();
         return membersRepository.save(member);
+    }
+
+    private String toLogin(String email) {
+        return email.split("@")[0];
     }
 
     private String extractAuthDetail(Map<String, Object> authenticationDetails, String detailName) {

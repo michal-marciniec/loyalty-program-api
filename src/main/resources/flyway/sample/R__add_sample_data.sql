@@ -1,5 +1,5 @@
-INSERT INTO members(email, name, avatar_path, give_away_pool, gained_points) VALUES('simon@sample.com', 'simon', 'default-avatar.png', 10, 40);
-INSERT INTO members(email, name, avatar_path, give_away_pool, gained_points) VALUES('member@sample.com', 'member', 'default-avatar.png', 10, 80);
+INSERT INTO members(login, name, avatar_path, give_away_pool, gained_points) VALUES('simon', 'simon', 'default-avatar.png', 10, 40);
+INSERT INTO members(login, name, avatar_path, give_away_pool, gained_points) VALUES('member', 'member', 'default-avatar.png', 10, 80);
 
 INSERT INTO rewards(price, description, logo_path, amount, expiration_date) VALUES(50, 'Banana', 'http://www.pngall.com/wp-content/uploads/2016/04/Banana-Free-Download-PNG.png', 3, '2100-10-10');
 INSERT INTO rewards(price, description, logo_path, amount, expiration_date) VALUES(30, 'Handshake', 'https://openclipart.org/download/276483/1490609861.svg', 1000, '2100-10-10');

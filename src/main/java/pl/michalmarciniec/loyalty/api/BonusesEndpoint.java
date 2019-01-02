@@ -40,9 +40,10 @@ public class BonusesEndpoint {
     @GetMapping
     public ResponseEntity<List<BonusDto>> getBonuses(SearchBonusesCommand command) {
         List<BonusDto> bonuses = new SearchQuery<>(bonusesRepository)
-                .addPredicate(command.getStartDate(), (builder, value) -> builder.and(bonus.createdAt.after(value)))
-                .addPredicate(command.getEndDate(), (builder, value) -> builder.and(bonus.createdAt.before(value)))
-                .addPredicate(command.getMemberId(), (builder, value) -> builder.and(bonus.receiverId.eq(value)))
+                .addPredicate(command.getGivenFrom(), (builder, value) -> builder.and(bonus.createdAt.after(value)))
+                .addPredicate(command.getGivenTo(), (builder, value) -> builder.and(bonus.createdAt.before(value)))
+                .addPredicate(command.getReceiverId(), (builder, value) -> builder.and(bonus.receiverId.eq(value)))
+                .addPredicate(command.getGiverId(), (builder, value) -> builder.and(bonus.giverId.eq(value)))
                 .find()
                 .stream()
                 .map(bonus -> ModelMapper.map(bonus, BonusDtoBuilder.class).build())

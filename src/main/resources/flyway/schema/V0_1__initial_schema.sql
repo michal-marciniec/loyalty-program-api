@@ -2,7 +2,7 @@ CREATE TABLE members (
   id          BIGINT AUTO_INCREMENT,
   name        VARCHAR(100) NOT NULL,
   avatar_path VARCHAR(500) NOT NULL,
-  email       VARCHAR(100) NOT NULL UNIQUE,
+  login       VARCHAR(100) NOT NULL UNIQUE,
   give_away_pool BIGINT NOT NULL,
   gained_points BIGINT NOT NULL,
 

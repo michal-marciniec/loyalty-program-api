@@ -12,16 +12,17 @@ public class SearchBonusesCommand {
     private final static String DATE_PARAM_FORMAT = "yyyy-MM-dd";
 
     @DateTimeFormat(pattern = DATE_PARAM_FORMAT)
-    LocalDateTime startDate;
+    LocalDateTime givenFrom;
     @DateTimeFormat(pattern = DATE_PARAM_FORMAT)
-    LocalDateTime endDate;
-    Long memberId;
+    LocalDateTime givenTo;
+    Long giverId;
+    Long receiverId;
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate.atStartOfDay();
+    public void setGivenFrom(LocalDate givenFrom) {
+        this.givenFrom = givenFrom.atStartOfDay();
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate.atTime(LocalTime.MAX);
+    public void setGivenTo(LocalDate givenTo) {
+        this.givenTo = givenTo.atTime(LocalTime.MAX);
     }
 }

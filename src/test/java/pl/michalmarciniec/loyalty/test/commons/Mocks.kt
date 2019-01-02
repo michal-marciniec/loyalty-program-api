@@ -24,7 +24,7 @@ fun mockMemberAsModerator(): Member {
 
     return Member.builder()
             .avatarPath("moderator.png")
-            .email("moderator@sample.com")
+            .login("moderator")
             .name("moderator")
             .wallet(Wallet.builder().giveAwayPool(10L).gainedPoints(0L).build())
             .roles(HashSet(singletonList(moderator))).build()
@@ -35,7 +35,7 @@ fun mockMemberWithNoPermissions(): Member {
 
     return Member.builder()
             .avatarPath("default-avatar.png")
-            .email("member@sample.com")
+            .login("member")
             .name("member")
             .wallet(Wallet.builder().giveAwayPool(20L).gainedPoints(10L).build())
             .roles(HashSet(singletonList(memberRole))).build()

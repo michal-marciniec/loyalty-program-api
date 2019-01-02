@@ -7,7 +7,7 @@ import lombok.Value;
 @Builder
 public class MemberDto {
     Long id;
-    String email;
+    String login;
     String name;
     String avatarPath;
     Long giveAwayPool;

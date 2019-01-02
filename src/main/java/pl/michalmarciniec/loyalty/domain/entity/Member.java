@@ -40,8 +40,8 @@ public class Member extends BaseEntity {
     @JoinColumn(name = "member_id")
     Set<ClaimedReward> rewards = new HashSet<>();
 
-    @Column(name = "email", nullable = false, length = 100)
-    String email;
+    @Column(name = "login", nullable = false, length = 100)
+    String login;
 
     @Embedded
     Wallet wallet;
