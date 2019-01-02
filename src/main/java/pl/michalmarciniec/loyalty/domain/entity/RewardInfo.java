@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
 @ToString
 @Getter
 @Builder
-class RewardInfo {
+public class RewardInfo {
 
     @Column(name = "price", nullable = false)
     Long price;

@@ -54,6 +54,7 @@ public class AuthenticationServiceProd implements AuthenticationService {
     public Member getCurrentMember() {
         return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
                 .map(authentication -> (Member) authentication.getPrincipal())
+                .map(member -> membersRepository.findOne(member.getId()))
                 .orElseThrow(NoMemberInSessionException::new);
     }
 

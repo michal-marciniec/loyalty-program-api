@@ -1,7 +1,9 @@
 package pl.michalmarciniec.loyalty.db;
 
-public class EntityNotFoundException extends RuntimeException {
+import pl.michalmarciniec.loyalty.common.ClientBadRequestException;
+
+public class EntityNotFoundException extends ClientBadRequestException {
     public EntityNotFoundException() {
-        super("Queried entity not found. Query parameters should be validated.");
+        super("Queried entity not found.");
     }
 }

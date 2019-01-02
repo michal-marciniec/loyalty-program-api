@@ -1,12 +1,12 @@
 package pl.michalmarciniec.loyalty.api.validation;
 
-import pl.michalmarciniec.loyalty.db.EntityNotFoundException;
-import pl.michalmarciniec.loyalty.domain.entity.InsufficientPointsException;
-import pl.michalmarciniec.loyalty.domain.entity.PointsAlreadySpentException;
+import pl.michalmarciniec.loyalty.common.ClientBadRequestException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,47 +28,27 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatus status,
             WebRequest request) {
 
+        BindingResult bindingResult = validationException.getBindingResult();
         List<String> errors = Stream.concat(
-                validationException.getBindingResult().getGlobalErrors().stream()
-                        .map(DefaultMessageSourceResolvable::getCode),
-                validationException.getBindingResult().getFieldErrors().stream()
-                        .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                bindingResult.getGlobalErrors().stream().map(DefaultMessageSourceResolvable::getCode),
+                bindingResult.getFieldErrors().stream().map(this::parseFieldError)
         ).collect(Collectors.toList());
 
         ErrorDto errorInfo = new ErrorDto("Command validation failed", errors);
         return new ResponseEntity<>(errorInfo, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorDto> handleEntityNotFound(EntityNotFoundException entityNotFoundException) {
+    @ExceptionHandler(ClientBadRequestException.class)
+    public ResponseEntity<ErrorDto> handleClientError(ClientBadRequestException clientErrorException) {
         ErrorDto errorInfo = new ErrorDto(
-                "Entity not found",
-                Collections.singletonList(entityNotFoundException.getMessage())
+                "Client error",
+                Collections.singletonList(clientErrorException.getMessage())
         );
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(errorInfo);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorInfo);
     }
 
-    @ExceptionHandler(InsufficientPointsException.class)
-    public ResponseEntity<ErrorDto> handleInsufficientPoints(InsufficientPointsException insufficientPointsException) {
-        ErrorDto errorInfo = new ErrorDto(
-                "Insufficient points",
-                Collections.singletonList(insufficientPointsException.getMessage())
-        );
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(errorInfo);
-    }
-
-    @ExceptionHandler(PointsAlreadySpentException.class)
-    public ResponseEntity<ErrorDto> handlePointsAlreadySpent(PointsAlreadySpentException pointsAlreadySpentException) {
-        ErrorDto errorInfo = new ErrorDto(
-                "Insufficient points",
-                Collections.singletonList(pointsAlreadySpentException.getMessage())
-        );
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(errorInfo);
+    private String parseFieldError(FieldError fieldError) {
+        return fieldError.getField() + " " + fieldError.getDefaultMessage();
     }
 }

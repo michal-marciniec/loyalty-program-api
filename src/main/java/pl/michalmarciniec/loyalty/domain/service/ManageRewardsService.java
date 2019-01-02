@@ -24,6 +24,7 @@ import static pl.michalmarciniec.loyalty.db.JpaRepositoryWrapper.getEntityOrFail
 public class ManageRewardsService {
     private final RewardsRepository rewardsRepository;
     private final ClaimedRewardsRepository claimedRewardsRepository;
+    private final ChangeRewardStatusStrategies changeRewardStatusStrategies;
 
     @Transactional
     public Reward addReward(AddRewardCommand addRewardCommand) {
@@ -45,7 +46,7 @@ public class ManageRewardsService {
     public ClaimedReward changeRewardStatus(ChangeRewardStatusCommand changeRewardStatusCommand) {
         ClaimedReward claimedReward = getEntityOrFail(() -> claimedRewardsRepository.findById(changeRewardStatusCommand.getClaimedRewardId()));
         log.debug("Changing reward {} status from {} to {}", claimedReward, claimedReward.getStatus(), changeRewardStatusCommand.getStatus());
-        claimedReward.changeStatus(changeRewardStatusCommand.getStatus());
+        changeRewardStatusStrategies.changeStatus(changeRewardStatusCommand);
         log.debug("Status for reward {} changed", claimedReward);
         return claimedReward;
     }

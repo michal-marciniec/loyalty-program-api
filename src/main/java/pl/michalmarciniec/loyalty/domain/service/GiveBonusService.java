@@ -29,7 +29,7 @@ public class GiveBonusService {
     @PreAuthorize("@giveBonusService.hasPermissionToGiveBonus(#giveBonusCommand.getCategory())")
     public Bonus giveBonus(GiveBonusCommand giveBonusCommand) {
         log.debug("Attempting to give bonus: {}", giveBonusCommand);
-        giveBonusStrategies.getStrategy(giveBonusCommand.getCategory()).accept(giveBonusCommand);
+        giveBonusStrategies.giveBonus(giveBonusCommand);
         Bonus savedBonus = bonusesRepository.save(buildBonus(giveBonusCommand));
         log.debug("Bonus {} given", savedBonus);
         return savedBonus;

@@ -1,7 +1,7 @@
 buildscript {
     ext {
         springBootVersion = "1.5.9.RELEASE"
-        kotlinVersion = "1.2.10"
+        kotlinVersion = "1.2.21"
         javaVersion = "1.8"
     }
     repositories {
@@ -19,7 +19,7 @@ buildscript {
 
 plugins {
     id "io.franzbecker.gradle-lombok" version "1.11"
-    id "org.jetbrains.kotlin.jvm" version "1.2.0"
+    id "org.jetbrains.kotlin.jvm" version "1.2.21"
 }
 
 apply plugin: "java"

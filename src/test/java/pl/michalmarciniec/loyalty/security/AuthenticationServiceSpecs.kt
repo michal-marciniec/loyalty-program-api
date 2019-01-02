@@ -56,8 +56,10 @@ class AuthenticationServiceSpecs : Spek({
         it("Get current member") {
             val authentication = mock<Authentication>(Authentication::class.java)
             val securityCtx = mock<SecurityContext>(SecurityContext::class.java)
+            val member = mockMemberWithNoPermissions()
             _when(securityCtx.authentication).thenReturn(authentication)
-            _when(authentication.principal).thenReturn(mockMemberWithNoPermissions())
+            _when(authentication.principal).thenReturn(member)
+            _when(membersRepository.findOne(member.id)).thenReturn(mockMemberWithNoPermissions())
             SecurityContextHolder.setContext(securityCtx)
 
             assertThat(authenticationService.currentMember).isNotNull()

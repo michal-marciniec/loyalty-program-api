@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @LoyaltyProgramApi
-@RequestMapping(value = "/roles", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/roles", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class RolesEndpoint {
     private final AuthorizationService authorizationService;

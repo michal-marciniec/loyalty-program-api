@@ -1,5 +1,7 @@
 package pl.michalmarciniec.loyalty.domain.entity;
 
+import pl.michalmarciniec.loyalty.domain.entity.exceptions.InsufficientPointsException;
+import pl.michalmarciniec.loyalty.domain.entity.exceptions.PointsAlreadySpentException;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -22,7 +24,7 @@ public class Wallet {
 
     public void transferPoints(Wallet to, Long points) {
         subtractPoints(points);
-        to.addPoints(points);
+        to.gainedPoints += points;
     }
 
     public void cancelBonus(Bonus bonus, Wallet receiverWallet) {
@@ -34,12 +36,15 @@ public class Wallet {
         giveAwayPool += bonus.points;
     }
 
-    public void resetGiveAwayPool(Long startingPool) {
-        this.giveAwayPool = startingPool;
+    public void spendPoints(Long points) {
+        if (points > gainedPoints) {
+            throw new PointsAlreadySpentException();
+        }
+        gainedPoints -= points;
     }
 
-    void addPoints(Long points) {
-        this.gainedPoints += points;
+    public void resetGiveAwayPool(Long startingPool) {
+        this.giveAwayPool = startingPool;
     }
 
     private void subtractPoints(Long points) {

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @LoyaltyProgramApi
 @RequiredArgsConstructor
-@RequestMapping(path = "/categories")
+@RequestMapping(path = "/api/categories")
 public class BonusesCategoriesEndpoint {
     private final BonusesCategoriesRepository bonusesCategoriesRepository;
     private final AuthenticationService authenticationService;

@@ -1,5 +1,6 @@
 package pl.michalmarciniec.loyalty.domain.entity;
 
+import pl.michalmarciniec.loyalty.domain.entity.exceptions.InsufficientPointsException;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,7 +35,7 @@ public class BonusCategory extends BaseEntity {
 
     public void transferPoints(Wallet receiverWallet, Long points) {
         subtractPoints(points);
-        receiverWallet.addPoints(points);
+        receiverWallet.gainedPoints += points;
     }
 
     private void subtractPoints(Long points) {

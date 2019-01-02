@@ -18,7 +18,7 @@ import static java.util.Arrays.asList;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @LoyaltyProgramApi
-@RequestMapping(path = "/rewards", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/rewards", produces = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class RewardsEndpoint {
     private final RewardsRepository rewardsRepository;

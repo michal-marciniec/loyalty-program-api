@@ -1,6 +1,7 @@
 package pl.michalmarciniec.loyalty.domain.entity;
 
 import pl.michalmarciniec.loyalty.domain.command.EditRewardCommand;
+import pl.michalmarciniec.loyalty.domain.entity.exceptions.RewardSoldOutException;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -34,4 +35,13 @@ public class Reward extends BaseEntity {
         this.rewardInfo.logoPath = editRewardCommand.getLogoPath();
         this.rewardInfo.price = editRewardCommand.getPrice();
     }
+
+    public void sell() {
+        if (LocalDateTime.now().isAfter(expirationDate) || amount < 1) {
+            throw new RewardSoldOutException();
+        }
+
+        amount--;
+    }
+
 }

@@ -17,7 +17,7 @@ public class ProdSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .authorizeRequests().antMatchers("/", "/login**").permitAll()
+                .authorizeRequests().antMatchers("/login**").permitAll()
                 .and().authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
                 .and().authorizeRequests().anyRequest().authenticated();
 

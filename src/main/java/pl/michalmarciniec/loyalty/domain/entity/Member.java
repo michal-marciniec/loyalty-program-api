@@ -36,8 +36,8 @@ public class Member extends BaseEntity {
     )
     Set<Role> roles = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "member_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "member", orphanRemoval = true)
+    @Builder.Default
     Set<ClaimedReward> rewards = new HashSet<>();
 
     @Column(name = "login", nullable = false, length = 100)
@@ -49,6 +49,11 @@ public class Member extends BaseEntity {
     public void addRole(Role role) {
         Preconditions.checkNotNull(role);
         roles.add(role);
+    }
+
+    public void addReward(ClaimedReward claimedReward) {
+        Preconditions.checkNotNull(claimedReward);
+        rewards.add(claimedReward);
     }
 
     public List<GrantedAuthority> getAuthorities() {

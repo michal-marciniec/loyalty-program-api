@@ -18,7 +18,7 @@ public abstract class SecurityConfiguration extends WebSecurityConfigurerAdapter
                     .addMapping("/**")
                     .allowedOrigins(allowedOrigins.split(","))
                     .allowedHeaders("*")
-                    .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE");
+                    .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "DELETE");
             }
         };
     }

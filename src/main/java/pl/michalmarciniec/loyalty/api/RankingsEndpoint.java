@@ -17,7 +17,7 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @LoyaltyProgramApi
-@RequestMapping(value = "/rankings", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/rankings", produces = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class RankingsEndpoint {
     private final static String DATE_PARAM_FORMAT = "yyyy-MM-dd";

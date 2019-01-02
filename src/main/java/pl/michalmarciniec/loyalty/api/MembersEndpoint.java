@@ -22,7 +22,7 @@ import static java.util.Arrays.asList;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @LoyaltyProgramApi
-@RequestMapping(path = "/members", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/members", produces = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class MembersEndpoint {
     private final MembersRepository membersRepository;

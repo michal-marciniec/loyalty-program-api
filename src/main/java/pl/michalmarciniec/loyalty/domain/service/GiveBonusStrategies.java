@@ -6,12 +6,14 @@ import pl.michalmarciniec.loyalty.domain.command.GiveBonusCommand;
 import pl.michalmarciniec.loyalty.domain.entity.BonusCategory;
 import pl.michalmarciniec.loyalty.domain.entity.BonusCategoryName;
 import pl.michalmarciniec.loyalty.domain.entity.Wallet;
+import pl.michalmarciniec.loyalty.domain.service.exceptions.InvalidGiveBonusStrategyException;
 import pl.michalmarciniec.loyalty.security.AuthenticationService;
 import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import static pl.michalmarciniec.loyalty.db.JpaRepositoryWrapper.getEntityOrFail;
@@ -31,8 +33,10 @@ public class GiveBonusStrategies {
     private final AuthenticationService authenticationService;
 
 
-    public Consumer<GiveBonusCommand> getStrategy(BonusCategoryName categoryName) {
-        return giveBonusStrategies.get(categoryName);
+    void giveBonus(GiveBonusCommand giveBonusCommand) {
+        Consumer<GiveBonusCommand> strategy = Optional.ofNullable(giveBonusStrategies.get(giveBonusCommand.getCategory()))
+                .orElseThrow(InvalidGiveBonusStrategyException::new);
+        strategy.accept(giveBonusCommand);
     }
 
     private void specialPermissionStrategy(GiveBonusCommand giveBonusCommand) {

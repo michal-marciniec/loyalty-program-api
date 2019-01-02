@@ -27,7 +27,7 @@ import static pl.michalmarciniec.loyalty.domain.entity.QBonus.bonus;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @LoyaltyProgramApi
-@RequestMapping(path = "/bonuses", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/bonuses", produces = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class BonusesEndpoint {
     private final GiveBonusService giveBonusService;

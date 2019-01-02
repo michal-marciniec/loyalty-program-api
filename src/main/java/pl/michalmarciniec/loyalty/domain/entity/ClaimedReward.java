@@ -1,9 +1,11 @@
 package pl.michalmarciniec.loyalty.domain.entity;
 
+import com.google.common.base.Preconditions;
 import lombok.*;
 
 import javax.persistence.*;
 
+import static pl.michalmarciniec.loyalty.domain.entity.RewardStatus.*;
 import static lombok.AccessLevel.PRIVATE;
 
 @Entity
@@ -15,8 +17,9 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder
 public class ClaimedReward extends BaseEntity {
 
-    @Column(name = "member_id", nullable = false)
-    Long memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    Member member;
 
     @Embedded
     RewardInfo rewardInfo;
@@ -25,7 +28,15 @@ public class ClaimedReward extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RewardStatus status;
 
-    public void changeStatus(RewardStatus newStatus) {
-        this.status = newStatus;
+    public void reject() {
+        Preconditions.checkArgument(status == PENDING);
+        member.getWallet().gainedPoints += rewardInfo.price;
+        status = REJECTED;
     }
+
+    public void realize() {
+        Preconditions.checkArgument(status == PENDING);
+        status = REALIZED;
+    }
+
 }
