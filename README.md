@@ -1,33 +1,42 @@
 # Loyalty Program API
+REST API that allows you to incorporate a customizable loyalty rewards program into your own application.
 
-### Prerequisites
+The goal of this project is to expose a developer-friendly API via which an organization may define:
+- bonuses available for organization members for a specific amount of points
+- rules for points exchange between members
+- automatically rewarding best members in a specific timespan (rankings)
+- periodically resetting pools of points available for members
+- process of reward claim realization
+- ... many many more ...
 
-To build and run the application following are needed to be installed:
-- JDK 8
+## Developer's guide
+### Tech Stack
+##### Source
+- Java 8
+- Spring Boot Web
+- Spring Data JPA
+- Spring Security
+- Hibernate
+- Flyway migrations
+- QueryDSL
+- ModelMapper
+- Lombok
+- Jackson
+- Swagger
 - Gradle
 
-After installation you need to download proper gradle wrapper version, which is defined in build.gradle. It can be accomplished by running:
+##### Tests
+- Kotlin
+- Spek
+- Mockito
+- JUnit
 
-```
-gradle wrapper
-```
-
-in project directory.
-
-### Build and run
-
+### Build & run
 The application uses gradle as a build tool. To build and run go to project directory and simply execute:
-
 ```
-./gradlew build -x test
+./gradlew build
 ./gradlew bootRun
 ```
-It can be then accessed at localhost:8999. Api specification is available at `http:localhost:8999/swagger-ui.html`
+It can be then accessed at `localhost:8999`.
 
-### Running the tests
-
-Tests can be run using gradle build tool by typing:
-
-```
-./gradlew test
-```
+API specification is available at `http:localhost:8999/swagger-ui.html`
