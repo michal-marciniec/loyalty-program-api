@@ -81,3 +81,25 @@ fun mockReward(price: Long, amount: Long, expirationDate: LocalDateTime): Reward
     reward.id = UUID.randomUUID().leastSignificantBits
     return reward
 }
+
+fun mockBonus(): Bonus {
+    val bonus = Bonus.builder()
+            .category(mockNoLimitCategory())
+            .comments(ArrayList())
+            .description("Nice")
+            .giverId(1L)
+            .receiverId(1L)
+            .build()
+    bonus.id = UUID.randomUUID().leastSignificantBits
+    return bonus
+}
+
+fun mockComment(member: Member = mockMemberWithNoPermissions()): Comment {
+    val comment = Comment.builder()
+            .bonusId(1L)
+            .body("This is a comment")
+            .member(member)
+            .build()
+    comment.id = UUID.randomUUID().leastSignificantBits
+    return comment
+}

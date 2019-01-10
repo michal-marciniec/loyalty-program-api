@@ -16,3 +16,9 @@ INSERT INTO member_rewards(member_id, price, description, logo_path, status) VAL
 INSERT INTO members_roles(member_id, role_id) VALUES(2, 1);
 INSERT INTO members_roles(member_id, role_id) VALUES(3, 1);
 
+INSERT INTO comments(member_id, bonus_id, body) VALUES (1, 1, 'This is a comment');
+INSERT INTO comments(member_id, bonus_id, body) VALUES (2, 1, 'Great');
+INSERT INTO comments(member_id, bonus_id, body) VALUES (3, 1, 'Awesome');
+INSERT INTO comments(member_id, bonus_id, body) VALUES (1, 2, 'Too bad');
+INSERT INTO comments(member_id, bonus_id, body) VALUES (1, 2, 'Awwww');
+
