@@ -46,6 +46,15 @@ public class Member extends BaseEntity {
     @Embedded
     Wallet wallet;
 
+    @ManyToMany
+    @JoinTable(
+            name = "members_badges",
+            joinColumns = @JoinColumn(name = "member_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "badge_id", referencedColumnName = "id")
+    )
+    @Builder.Default
+    Set<Badge> badges = new HashSet<>();
+
     public void addRole(Role role) {
         Preconditions.checkNotNull(role);
         roles.add(role);
