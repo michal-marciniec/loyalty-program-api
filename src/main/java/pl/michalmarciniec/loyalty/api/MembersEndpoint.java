@@ -2,6 +2,7 @@ package pl.michalmarciniec.loyalty.api;
 
 import pl.michalmarciniec.loyalty.common.ModelMapper;
 import pl.michalmarciniec.loyalty.db.MembersRepository;
+import pl.michalmarciniec.loyalty.domain.dto.BadgeDto;
 import pl.michalmarciniec.loyalty.domain.dto.MemberDto;
 import pl.michalmarciniec.loyalty.domain.dto.MemberDto.MemberDtoBuilder;
 import pl.michalmarciniec.loyalty.domain.dto.ClaimedRewardDto;
@@ -65,5 +66,12 @@ public class MembersEndpoint {
                 .collect(Collectors.toList()));
     }
 
+    @GetMapping(path = "/{memberId}/badges")
+    public ResponseEntity<List<BadgeDto>> getMemberBadges(@PathVariable Long memberId) {
+        Member member = getEntityOrFail(() -> membersRepository.findById(memberId));
+        return ResponseEntity.ok(member.getBadges().stream()
+                .map(badge -> ModelMapper.map(badge, BadgeDto.BadgeDtoBuilder.class).build())
+                .collect(Collectors.toList()));
+    }
 
 }

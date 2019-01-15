@@ -103,3 +103,13 @@ fun mockComment(member: Member = mockMemberWithNoPermissions()): Comment {
     comment.id = UUID.randomUUID().leastSignificantBits
     return comment
 }
+
+fun mockBadge(): Badge {
+    val badge = Badge.builder()
+            .description("description")
+            .imagePath("image path")
+            .build()
+
+    badge.id = UUID.randomUUID().leastSignificantBits
+    return badge
+}

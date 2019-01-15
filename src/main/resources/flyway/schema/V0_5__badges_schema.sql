@@ -14,6 +14,6 @@ CREATE TABLE members_badges (
   badge_id   BIGINT NOT NULL,
 
   PRIMARY KEY (member_id, badge_id),
-  FOREIGN KEY (member_id) REFERENCES members (id),
-  FOREIGN KEY (badge_id) REFERENCES badges (id)
+  FOREIGN KEY (member_id) REFERENCES members (id) ON DELETE CASCADE,
+  FOREIGN KEY (badge_id) REFERENCES badges (id) ON DELETE CASCADE
 );

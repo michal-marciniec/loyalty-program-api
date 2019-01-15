@@ -2,8 +2,10 @@ package pl.michalmarciniec.loyalty.domain.service;
 
 import pl.michalmarciniec.loyalty.common.ModelMapper;
 import pl.michalmarciniec.loyalty.db.BadgesRepository;
+import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.domain.command.CreateBadgeCommand;
 import pl.michalmarciniec.loyalty.domain.entity.Badge;
+import pl.michalmarciniec.loyalty.domain.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import static pl.michalmarciniec.loyalty.db.JpaRepositoryWrapper.getEntityOrFail
 @PreAuthorize("hasRole(T(RoleName).ROLE_ADMIN.name())")
 public class ManageBadgesService {
     private final BadgesRepository badgesRepository;
+    private final MembersRepository membersRepository;
 
     @Transactional
     public Badge createBadge(CreateBadgeCommand createBadgeCommand) {
@@ -25,9 +28,26 @@ public class ManageBadgesService {
 
     @Transactional
     public Badge editBadge(Long badgeId, CreateBadgeCommand createBadgeCommand) {
-        Badge existingBadge = getEntityOrFail(() -> badgesRepository.findById(badgeId))
+        return getEntityOrFail(() -> badgesRepository.findById(badgeId))
                 .edit(createBadgeCommand);
-        return badgesRepository.save(existingBadge);
     }
 
+    @Transactional
+    public void deleteBadge(Long badgeId) {
+        badgesRepository.delete(badgeId);
+    }
+
+    @Transactional
+    public void assignBadgeToMember(Long badgeId, Long memberId) {
+        Badge badge = getEntityOrFail(() -> badgesRepository.findById(badgeId));
+        Member member = getEntityOrFail(() -> membersRepository.findById(memberId));
+        member.getBadges().add(badge);
+    }
+
+    @Transactional
+    public void removeBadgeFromMember(Long badgeId, Long memberId) {
+        Badge badge = getEntityOrFail(() -> badgesRepository.findById(badgeId));
+        Member member = getEntityOrFail(() -> membersRepository.findById(memberId));
+        member.getBadges().remove(badge);
+    }
 }
