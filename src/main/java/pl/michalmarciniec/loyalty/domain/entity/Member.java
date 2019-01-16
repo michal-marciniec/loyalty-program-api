@@ -38,7 +38,6 @@ public class Member extends BaseEntity {
     Set<Role> roles = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "member", orphanRemoval = true)
-    @Builder.Default
     Set<ClaimedReward> rewards = new HashSet<>();
 
     @Column(name = "login", nullable = false, length = 100)

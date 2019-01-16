@@ -24,3 +24,11 @@ INSERT INTO comments(member_id, bonus_id, body) VALUES (1, 2, 'Awwww');
 
 INSERT INTO badges(id, description, image_path) VALUES (1, 'Gold medal', 'https://www.quicktapsurvey.com/blog/wp-content/uploads/2016/12/bonus.jpeg');
 INSERT INTO members_badges(member_id, badge_id) VALUES (1, 1);
+INSERT INTO comments(member_id, bonus_id, body) VALUES (1, 1, 'This is a comment');
+INSERT INTO comments(member_id, bonus_id, body) VALUES (2, 1, 'Great');
+INSERT INTO comments(member_id, bonus_id, body) VALUES (3, 1, 'Awesome');
+INSERT INTO comments(member_id, bonus_id, body) VALUES (1, 2, 'Too bad');
+INSERT INTO comments(member_id, bonus_id, body) VALUES (1, 2, 'Awwww');
+
+INSERT INTO badges(id, description, image_path) VALUES (1, 'Gold medal', 'https://www.quicktapsurvey.com/blog/wp-content/uploads/2016/12/bonus.jpeg');
+INSERT INTO members_badges(member_id, badge_id) VALUES (1, 1);

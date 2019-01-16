@@ -23,11 +23,9 @@ public class Reward extends BaseEntity {
     RewardInfo rewardInfo;
 
     @Column(name = "amount", nullable = false)
-    @Builder.Default
     Long amount = 1L;
 
     @Column(name = "expiration_date", nullable = false)
-    @Builder.Default
     LocalDateTime expirationDate = LocalDateTime.MAX;
 
     public void edit(EditRewardCommand editRewardCommand) {

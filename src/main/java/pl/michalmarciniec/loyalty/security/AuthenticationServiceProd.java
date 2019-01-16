@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static pl.michalmarciniec.loyalty.domain.entity.Role.DEFAULT_ROLE_NAME;
+
 @Profile("prod")
 @Service
 @RequiredArgsConstructor
@@ -64,7 +66,7 @@ public class AuthenticationServiceProd implements AuthenticationService {
     }
 
     private Member createMember(Map<String, Object> authenticationDetails) {
-        Role defaultRole = rolesRepository.findByName(Role.DEFAULT_ROLE_NAME).orElseThrow(DefaultRoleNotFoundException::new);
+        Role defaultRole = rolesRepository.findByName(DEFAULT_ROLE_NAME).orElseThrow(DefaultRoleNotFoundException::new);
         String login = toLogin(extractAuthDetail(authenticationDetails, AUTH_DETAILS_EMAIL));
         Member member = Member.builder()
                 .login(login)

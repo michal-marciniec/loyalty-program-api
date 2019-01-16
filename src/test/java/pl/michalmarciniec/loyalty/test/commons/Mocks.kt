@@ -18,7 +18,7 @@ fun mockOvertimeCategory100Points(): BonusCategory {
             .name(OVERTIME)
             .permission(Permission.builder().name(MANAGE_OVERTIME).build())
             .pointsPool(100)
-            .editPeriodInHours(10)
+            .editPeriodInMinutes(10)
             .build()
     bonusCategory.id = UUID.randomUUID().leastSignificantBits
     return bonusCategory
@@ -26,7 +26,7 @@ fun mockOvertimeCategory100Points(): BonusCategory {
 
 fun mockNoLimitCategory(): BonusCategory {
     val bonusCategory = BonusCategory.builder()
-            .editPeriodInHours(1)
+            .editPeriodInMinutes(1)
             .name(NO_LIMIT)
             .permission(Permission.builder().name(REGULAR_MEMBER).build())
             .pointsPool(null)

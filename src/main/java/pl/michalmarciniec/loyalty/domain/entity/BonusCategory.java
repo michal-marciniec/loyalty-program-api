@@ -27,7 +27,7 @@ public class BonusCategory extends BaseEntity {
     Long pointsPool;
 
     @Column(name = "edit_period", nullable = false)
-    Long editPeriodInHours;
+    Long editPeriodInMinutes;
 
     public void resetPointsPool(Long startingPool) {
         pointsPool = startingPool;

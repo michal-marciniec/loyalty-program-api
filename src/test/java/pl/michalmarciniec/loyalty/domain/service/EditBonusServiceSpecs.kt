@@ -73,7 +73,7 @@ fun mockBonusBeforeEdition(editPeriodInHours: Long): Bonus {
     return Bonus.builder()
             .points(5L)
             .description("Old description")
-            .category(BonusCategory.builder().editPeriodInHours(editPeriodInHours).build())
+            .category(BonusCategory.builder().editPeriodInMinutes(editPeriodInHours).build())
             .giverId(currentMember.id)
             .receiverId(receiverId)
             .build()

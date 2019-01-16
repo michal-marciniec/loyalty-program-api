@@ -52,8 +52,8 @@ public class EditBonusService {
     }
 
     private boolean editPeriodNotExceeded(Bonus bonus) {
-        Long editPeriodInHours = bonus.getCategory().getEditPeriodInHours();
-        return LocalDateTime.now().isBefore(bonus.getCreatedAt().plusHours(editPeriodInHours));
+        Long editPeriodInHours = bonus.getCategory().getEditPeriodInMinutes();
+        return LocalDateTime.now().isBefore(bonus.getCreatedAt().plusMinutes(editPeriodInHours));
     }
 
 }

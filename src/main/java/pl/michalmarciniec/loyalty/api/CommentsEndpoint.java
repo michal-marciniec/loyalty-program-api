@@ -8,7 +8,9 @@ import pl.michalmarciniec.loyalty.domain.dto.CommentDto;
 import pl.michalmarciniec.loyalty.domain.dto.MemberDto;
 import pl.michalmarciniec.loyalty.domain.entity.Bonus;
 import pl.michalmarciniec.loyalty.domain.entity.Comment;
+import pl.michalmarciniec.loyalty.domain.entity.Rank;
 import pl.michalmarciniec.loyalty.domain.service.ManageCommentService;
+import pl.michalmarciniec.loyalty.domain.service.RankResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class CommentsEndpoint {
     private final BonusesRepository bonusesRepository;
     private final ManageCommentService manageCommentService;
+    private final RankResolver rankResolver;
 
     @GetMapping
     public ResponseEntity<List<CommentDto>> getAllBonusComments(@PathVariable Long bonusId) {
@@ -57,7 +60,8 @@ public class CommentsEndpoint {
     }
 
     private CommentDto toCommentDto(Comment comment) {
-        MemberDto member = ModelMapper.map(comment.getMember(), MemberDto.MemberDtoBuilder.class).build();
+        Rank memberRank = rankResolver.getMemberRank(comment.getMember());
+        MemberDto member = MemberDto.basic(comment.getMember(), memberRank).build();
         return ModelMapper.map(comment, CommentDto.CommentDtoBuilder.class)
                 .member(member)
                 .build();

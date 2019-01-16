@@ -31,7 +31,6 @@ public class Role extends BaseEntity implements GrantedAuthority {
             joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id")
     )
-    @Builder.Default
     List<Permission> permissions = new ArrayList<>();
 
     @Override

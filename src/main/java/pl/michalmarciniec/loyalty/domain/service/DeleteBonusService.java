@@ -3,6 +3,7 @@ package pl.michalmarciniec.loyalty.domain.service;
 import pl.michalmarciniec.loyalty.db.BonusesRepository;
 import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.domain.entity.Bonus;
+import pl.michalmarciniec.loyalty.domain.entity.Member;
 import pl.michalmarciniec.loyalty.domain.entity.Wallet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +24,9 @@ public class DeleteBonusService {
     @PreAuthorize("@editBonusService.hasPermissionToEditBonus(#bonusId)")
     public void deleteBonus(Long bonusId) {
         Bonus bonus = getEntityOrFail(() -> bonusesRepository.findById(bonusId));
-        Wallet receiverWallet = getEntityOrFail(() -> membersRepository.findById(bonus.getReceiverId())).getWallet();
+        Member receiver = getEntityOrFail(() -> membersRepository.findById(bonus.getReceiverId()));
         Wallet giverWallet = getEntityOrFail(() -> membersRepository.findById(bonus.getGiverId())).getWallet();
-        giverWallet.cancelBonus(bonus, receiverWallet);
+        giverWallet.cancelBonus(bonus, receiver.getWallet());
         bonusesRepository.delete(bonus);
         log.debug("Bonus {} deleted", bonus);
     }

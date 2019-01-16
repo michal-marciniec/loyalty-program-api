@@ -23,7 +23,7 @@ public abstract class BaseEntity {
 
     @Column(name = "edited_at", nullable = false)
     @UpdateTimestamp
-    @Version
+    // TODO: optimistic locking
     LocalDateTime editedAt; // must remain null as it's a version attribute hibernate uses to decide whether entity is transient
 
     @Override

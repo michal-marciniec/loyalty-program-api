@@ -4,9 +4,9 @@ import pl.michalmarciniec.loyalty.common.ModelMapper;
 import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.domain.dto.BadgeDto;
 import pl.michalmarciniec.loyalty.domain.dto.MemberDto;
-import pl.michalmarciniec.loyalty.domain.dto.MemberDto.MemberDtoBuilder;
 import pl.michalmarciniec.loyalty.domain.dto.ClaimedRewardDto;
 import pl.michalmarciniec.loyalty.domain.entity.Member;
+import pl.michalmarciniec.loyalty.domain.service.RankResolver;
 import pl.michalmarciniec.loyalty.security.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,18 +28,19 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class MembersEndpoint {
     private final MembersRepository membersRepository;
     private final AuthenticationService authenticationService;
+    private final RankResolver rankResolver;
 
     @GetMapping
     public ResponseEntity<List<MemberDto>> getAllMembers() {
         return ResponseEntity.ok(membersRepository.findAll().stream()
-                .map(member -> ModelMapper.map(asList(member, member.getWallet()), MemberDtoBuilder.class).build())
+                .map(member -> MemberDto.basic(member, rankResolver.getMemberRank(member)).build())
                 .collect(Collectors.toList()));
     }
 
     @GetMapping(path = "/{memberId}")
     public ResponseEntity<MemberDto> getMember(@PathVariable Long memberId) {
         Member member = getEntityOrFail(() -> membersRepository.findById(memberId));
-        MemberDto memberDto = ModelMapper.map(asList(member, member.getWallet()), MemberDtoBuilder.class).build();
+        MemberDto memberDto = MemberDto.basic(member, rankResolver.getMemberRank(member)).build();
         return ResponseEntity.ok(memberDto);
     }
 
@@ -54,7 +55,7 @@ public class MembersEndpoint {
     @GetMapping(path = "/me")
     public ResponseEntity<MemberDto> getCurrentMember() {
         Member member = authenticationService.getCurrentMember();
-        MemberDto memberDto = ModelMapper.map(asList(member, member.getWallet()), MemberDtoBuilder.class).build();
+        MemberDto memberDto = MemberDto.withWallet(member, rankResolver.getMemberRank(member)).build();
         return ResponseEntity.ok(memberDto);
     }
 
