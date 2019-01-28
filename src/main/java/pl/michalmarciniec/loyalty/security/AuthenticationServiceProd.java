@@ -73,6 +73,7 @@ public class AuthenticationServiceProd implements AuthenticationService {
                 .name(extractAuthDetail(authenticationDetails, AUTH_DETAILS_NAME))
                 .avatarPath(extractAuthDetail(authenticationDetails, AUTH_DETAILS_PICTURE))
                 .roles(new HashSet<>(Collections.singletonList(defaultRole)))
+                .badges(new HashSet<>())
                 .wallet(Wallet.builder().gainedPoints(walletGainedPointsPool).giveAwayPool(walletGiveAwayPointsPool).build())
                 .build();
         return membersRepository.save(member);

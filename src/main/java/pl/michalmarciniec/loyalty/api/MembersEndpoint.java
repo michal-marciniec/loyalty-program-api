@@ -5,8 +5,9 @@ import pl.michalmarciniec.loyalty.db.MembersRepository;
 import pl.michalmarciniec.loyalty.domain.dto.BadgeDto;
 import pl.michalmarciniec.loyalty.domain.dto.MemberDto;
 import pl.michalmarciniec.loyalty.domain.dto.ClaimedRewardDto;
+import pl.michalmarciniec.loyalty.domain.dto.MemberWithOverallPoints;
 import pl.michalmarciniec.loyalty.domain.entity.Member;
-import pl.michalmarciniec.loyalty.domain.service.RankResolver;
+import pl.michalmarciniec.loyalty.domain.entity.Rank;
 import pl.michalmarciniec.loyalty.security.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +33,9 @@ public class MembersEndpoint {
 
     @GetMapping
     public ResponseEntity<List<MemberDto>> getAllMembers() {
-        return ResponseEntity.ok(membersRepository.findAll().stream()
-                .map(member -> MemberDto.basic(member, rankResolver.getMemberRank(member)).build())
+        List<MemberWithOverallPoints> membersWithOverallPoints = membersRepository.getAllMembersWithOverallPoints();
+        return ResponseEntity.ok(membersWithOverallPoints.stream()
+                .map(this::toMemberDto)
                 .collect(Collectors.toList()));
     }
 
@@ -73,6 +75,11 @@ public class MembersEndpoint {
         return ResponseEntity.ok(member.getBadges().stream()
                 .map(badge -> ModelMapper.map(badge, BadgeDto.BadgeDtoBuilder.class).build())
                 .collect(Collectors.toList()));
+    }
+
+    private MemberDto toMemberDto(MemberWithOverallPoints memberWithOverallPoints) {
+        Rank matchingRank = rankResolver.findMemberRankByOverallPoints(memberWithOverallPoints.getOverallPoints());
+        return MemberDto.basic(memberWithOverallPoints.getMember(), matchingRank).build();
     }
 
 }

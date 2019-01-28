@@ -29,8 +29,8 @@ public class GiveBonusService {
     @PreAuthorize("@giveBonusService.hasPermissionToGiveBonus(#giveBonusCommand.getCategory())")
     public Bonus giveBonus(GiveBonusCommand giveBonusCommand) {
         log.debug("Attempting to give bonus: {}", giveBonusCommand);
-        giveBonusStrategies.giveBonus(giveBonusCommand);
         Bonus savedBonus = bonusesRepository.save(buildBonus(giveBonusCommand));
+        giveBonusStrategies.giveBonus(giveBonusCommand);
         log.debug("Bonus {} given", savedBonus);
         return savedBonus;
     }
@@ -45,9 +45,9 @@ public class GiveBonusService {
     private Bonus buildBonus(GiveBonusCommand giveBonusCommand) {
         BonusCategoryName categoryName = giveBonusCommand.getCategory();
         BonusCategory bonusCategory = getEntityOrFail(() -> bonusesCategoriesRepository.findByName(categoryName));
-        Long giverId = authenticationService.getCurrentMember().getId();
+        Member giver = authenticationService.getCurrentMember();
         return ModelMapper.map(giveBonusCommand, BonusBuilder.class)
-                .giverId(giverId)
+                .giverId(giver.getId())
                 .category(bonusCategory)
                 .build();
     }

@@ -10,7 +10,6 @@ import pl.michalmarciniec.loyalty.domain.entity.Bonus;
 import pl.michalmarciniec.loyalty.domain.entity.Comment;
 import pl.michalmarciniec.loyalty.domain.entity.Rank;
 import pl.michalmarciniec.loyalty.domain.service.ManageCommentService;
-import pl.michalmarciniec.loyalty.domain.service.RankResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

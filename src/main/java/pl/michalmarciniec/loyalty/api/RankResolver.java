@@ -1,4 +1,4 @@
-package pl.michalmarciniec.loyalty.domain.service;
+package pl.michalmarciniec.loyalty.api;
 
 import pl.michalmarciniec.loyalty.db.BonusesRepository;
 import pl.michalmarciniec.loyalty.db.RanksRepository;
@@ -16,6 +16,10 @@ public class RankResolver {
 
     public Rank getMemberRank(Member member) {
         Long memberOverallPoints = bonusesRepository.getMemberOverallPoints(member.getId());
+        return findMemberRankByOverallPoints(memberOverallPoints);
+    }
+
+    public Rank findMemberRankByOverallPoints(Long memberOverallPoints) {
         return ranksRepository.findAllByOrderByPointsThresholdDesc().stream()
                 .filter(rank -> rank.getPointsThreshold() <= memberOverallPoints)
                 .findFirst()
