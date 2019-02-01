@@ -3,8 +3,11 @@ package pl.michalmarciniec.loyalty.api;
 import pl.michalmarciniec.loyalty.common.ModelMapper;
 import pl.michalmarciniec.loyalty.db.BadgesRepository;
 import pl.michalmarciniec.loyalty.domain.command.CreateBadgeCommand;
+import pl.michalmarciniec.loyalty.domain.command.CreateBadgeConditionCommand;
+import pl.michalmarciniec.loyalty.domain.dto.BadgeConditionDto;
 import pl.michalmarciniec.loyalty.domain.dto.BadgeDto;
 import pl.michalmarciniec.loyalty.domain.entity.Badge;
+import pl.michalmarciniec.loyalty.domain.service.AssignBadgesService;
 import pl.michalmarciniec.loyalty.domain.service.ManageBadgesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +25,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class BadgesEndpoint {
     private final BadgesRepository badgesRepository;
     private final ManageBadgesService manageBadgesService;
+    private final AssignBadgesService assignBadgesService;
 
     @GetMapping
     public List<BadgeDto> getAllBadges() {
@@ -62,6 +66,21 @@ public class BadgesEndpoint {
     @DeleteMapping(path = "/{badgeId}/members/{memberId}")
     public void removeBadgeFromMember(@PathVariable Long badgeId, @PathVariable Long memberId) {
         manageBadgesService.removeBadgeFromMember(badgeId, memberId);
+    }
+
+    @PostMapping(path = "/conditions")
+    public BadgeConditionDto createBadgeCondition(@Validated @RequestBody CreateBadgeConditionCommand createCommand) {
+        return assignBadgesService.createBadgeCondition(createCommand);
+    }
+
+    @GetMapping(path = "/conditions")
+    public List<BadgeConditionDto> getAllBadgeConditions() {
+        return assignBadgesService.getAllBadgeConditions();
+    }
+
+    @DeleteMapping(path = "/conditions/{badgeConditionId}")
+    public void deleteBadgeCondition(@PathVariable Long badgeConditionId) {
+        assignBadgesService.deleteBadgeCondition(badgeConditionId);
     }
 
 }
