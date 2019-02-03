@@ -4,7 +4,6 @@ import pl.michalmarciniec.loyalty.db.BonusesCategoriesRepository;
 import pl.michalmarciniec.loyalty.db.BadgeConditionsRepository;
 import pl.michalmarciniec.loyalty.db.BadgesRepository;
 import pl.michalmarciniec.loyalty.domain.command.CreateBadgeConditionCommand;
-import pl.michalmarciniec.loyalty.domain.dto.BadgeConditionDto;
 import pl.michalmarciniec.loyalty.domain.entity.BonusCategory;
 import pl.michalmarciniec.loyalty.domain.entity.Badge;
 import pl.michalmarciniec.loyalty.domain.entity.BadgeCondition;
@@ -13,19 +12,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static pl.michalmarciniec.loyalty.db.JpaRepositoryWrapper.getEntityOrFail;
 
 @Service
 @RequiredArgsConstructor
 @PreAuthorize("hasRole(T(RoleName).ROLE_ADMIN.name())")
-public class AssignBadgesService {
+public class ManageBadgeConditionsService {
     private final BadgesRepository badgesRepository;
     private final BadgeConditionsRepository badgeConditionsRepository;
     private final BonusesCategoriesRepository bonusesCategoriesRepository;
 
-    public BadgeConditionDto createBadgeCondition(CreateBadgeConditionCommand createCommand) {
+    public BadgeCondition createBadgeCondition(CreateBadgeConditionCommand createCommand) {
         Badge badge = getEntityOrFail(() -> badgesRepository.findById(createCommand.getBadgeId()));
         BonusCategory bonusCategory = bonusesCategoriesRepository.findByName(createCommand.getCategoryName())
                 .orElse(null);
@@ -36,14 +34,11 @@ public class AssignBadgesService {
                 .conditionType(createCommand.getConditionType())
                 .build();
 
-        return new BadgeConditionDto(badgeConditionsRepository.save(badgeCondition));
+        return badgeConditionsRepository.save(badgeCondition);
     }
 
-    public List<BadgeConditionDto> getAllBadgeConditions() {
-        return badgeConditionsRepository.findAll()
-                .stream()
-                .map(BadgeConditionDto::new)
-                .collect(Collectors.toList());
+    public List<BadgeCondition> getAllBadgeConditions() {
+        return badgeConditionsRepository.findAll();
     }
 
     public void deleteBadgeCondition(Long badgeConditionId) {

@@ -7,7 +7,8 @@ import pl.michalmarciniec.loyalty.domain.command.CreateBadgeConditionCommand;
 import pl.michalmarciniec.loyalty.domain.dto.BadgeConditionDto;
 import pl.michalmarciniec.loyalty.domain.dto.BadgeDto;
 import pl.michalmarciniec.loyalty.domain.entity.Badge;
-import pl.michalmarciniec.loyalty.domain.service.AssignBadgesService;
+import pl.michalmarciniec.loyalty.domain.entity.BadgeCondition;
+import pl.michalmarciniec.loyalty.domain.service.ManageBadgeConditionsService;
 import pl.michalmarciniec.loyalty.domain.service.ManageBadgesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +26,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class BadgesEndpoint {
     private final BadgesRepository badgesRepository;
     private final ManageBadgesService manageBadgesService;
-    private final AssignBadgesService assignBadgesService;
+    private final ManageBadgeConditionsService manageBadgeConditionsService;
 
     @GetMapping
     public List<BadgeDto> getAllBadges() {
@@ -70,17 +71,21 @@ public class BadgesEndpoint {
 
     @PostMapping(path = "/conditions")
     public BadgeConditionDto createBadgeCondition(@Validated @RequestBody CreateBadgeConditionCommand createCommand) {
-        return assignBadgesService.createBadgeCondition(createCommand);
+        BadgeCondition badgeCondition = manageBadgeConditionsService.createBadgeCondition(createCommand);
+        return new BadgeConditionDto(badgeCondition);
     }
 
     @GetMapping(path = "/conditions")
     public List<BadgeConditionDto> getAllBadgeConditions() {
-        return assignBadgesService.getAllBadgeConditions();
+        return manageBadgeConditionsService.getAllBadgeConditions()
+                .stream()
+                .map(BadgeConditionDto::new)
+                .collect(Collectors.toList());
     }
 
     @DeleteMapping(path = "/conditions/{badgeConditionId}")
     public void deleteBadgeCondition(@PathVariable Long badgeConditionId) {
-        assignBadgesService.deleteBadgeCondition(badgeConditionId);
+        manageBadgeConditionsService.deleteBadgeCondition(badgeConditionId);
     }
 
 }

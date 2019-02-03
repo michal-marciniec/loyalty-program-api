@@ -31,3 +31,7 @@ tasks:
   resetPoints:
     walletCron: "0 0 1 * * MON"
     specialPermissionCron: "0 0 1 * * *"
+  assignBadges:
+    memberOfTheYear: "0 0 0 25 12 *"
+    memberOfTheMonth: "0 0 0 25 * *"
+    memberOfTheDay: "0 0 23 * * *"
